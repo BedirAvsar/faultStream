@@ -24,7 +24,7 @@ spring:
 
     # DATABASE POSTGRESQL
     datasource:
-        url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/faultstream}
+        url: ${DATABASE_URL:jdbc:postgresql://localhost:5433/faultstream}
         username: ${DATABASE_USER:faultstream_user}
         password: ${DATABASE_PASSWORD:faultstream_pass}
         hikari:
@@ -37,9 +37,8 @@ spring:
             ddl-auto: validate
         show-sql: false
         properties:
-            hibernate:
-                dialect: org.hibernate.dialect.PostgreSQLDialect
-                format_sql: true
+            "[hibernate.dialect]": org.hibernate.dialect.PostgreSQLDialect
+            "[hibernate.format_sql]": true
 
     # FLYWAY
     flyway:
@@ -55,7 +54,7 @@ spring:
             key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
             value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
             properties:
-                spring.json.trusted.packages: "com.faultstream.*"
+                "[spring.json.trusted.packages]": "com.faultstream.*"
         producer:
             key-serializer: org.apache.kafka.common.serialization.StringSerializer
             value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
