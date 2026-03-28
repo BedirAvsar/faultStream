@@ -1,0 +1,33 @@
+# ==============================================================
+# FAULTSTREAM - CI/CD OTOMATİK DENETÇİ (PIPELINE)
+# ==============================================================
+# Bu dosya, her kod gönderdiğinde GitHub tarafından okunur ve
+# projenin derlenip derlenmediğini otomatik kontrol eder.
+# ==============================================================
+
+name: FaultStream CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ] # Sadece main branch'ine kod gelince çalışır
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # GitHub'ın bize verdiği taze bir Linux makinesi
+
+    steps:
+    - name: 1. Kodları Getir (Checkout)
+      uses: actions/checkout@v4
+
+    - name: 2. Java 21 Hazırla (Temurin)
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven # Kütüphaneleri önbelleğe alıp hızı artırır
+
+    - name: 3. Projeyi Derle (Maven Compile)
+      # Şimdilik Docker container'ları GitHub bulutunda olmadığı için testleri geçiyoruz
+      run: ./mvnw clean compile -DskipTests
