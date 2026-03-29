@@ -365,9 +365,3 @@ Projeyi yararlı bulduysan **⭐ yıldız vermeyi** unutma — bu projenin daha 
 **Bedir Avşar**  
 Backend Geliştirici | Makine Mühendisi  
 [GitHub](https://github.com/bediravsar)
-
----
-
-> **Anahtar Kelimeler:** `java` `spring-boot` `kafka` `event-driven-architecture` `iot` `industrial-iot` `fault-detection` `postgresql` `redis` `docker` `jwt` `flyway` `predictive-maintenance` `manufacturing`
->
-> *Bu anahtar kelimeleri GitHub repo ayarlarındaki **Topics** alanına ekleyerek projenin arama sonuçlarında görünmesini sağla.*
