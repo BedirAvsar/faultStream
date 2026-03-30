@@ -1,6 +1,6 @@
 # FaultStream
 
-**Endüstriyel Ekipman Arıza Tespit ve Yönetim Sistemi**
+**Industrial Equipment Fault Detection & Management System**
 
 [![Java](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5-6DB33F?style=for-the-badge&logo=spring&logoColor=white)](https://spring.io/projects/spring-boot)
@@ -8,110 +8,110 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Redis](https://img.shields.io/badge/Redis-DD0031?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/)
 [![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
-[![License](https://img.shields.io/badge/Lisans-MIT-blue?style=for-the-badge)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
 ---
 
-## Genel Bakış
+## Overview
 
-**FaultStream**, orta ölçekli üretim tesislerindeki ekipmanları gerçek zamanlı olarak izleyen, anomalileri otomatik tespit eden ve bakım süreçlerini yöneten bir **olay tabanlı (event-driven) backend sistemidir.**
+**FaultStream** is an **event-driven backend system** designed to monitor industrial equipment in real-time, detect anomalies automatically, and orchestrate maintenance workflows.
 
-Birçok fabrika; ekipman arızalarını hâlâ Excel tabloları, kağıt formlar ve telefon görüşmeleriyle yönetmektedir. SAP PM veya IBM Maximo gibi kurumsal çözümler ise büyük şirketler için bile karmaşık ve maliyetlidir. FaultStream bu boşluğu, modern ve ölçeklenebilir bir mimariyle kapatmayı hedefler.
-
----
-
-## Problem
-
-Üretim ortamları sürekli sensör verisi üretir. Ancak:
-
-- Arızalar çok geç fark edilir → üretim durur, para kaybedilir
-- Bakım süreçleri manuel yürütülür → insan hatası kaçınılmazdır
-- Merkezi bir takip sistemi yoktur → geçmişe dönük analiz yapılamaz
-- Kurumsal araçlar aşırı pahalıdır → KOBİ'ler dışlanır
+Many mid-sized manufacturing facilities still manage equipment failures using spreadsheets, paper forms, and phone calls. Enterprise solutions like SAP PM or IBM Maximo are often too complex and expensive for many businesses. FaultStream fills this gap with a modern, scalable, and cost-effective architecture.
 
 ---
 
-## Çözüm
+## The Problem
 
-FaultStream, sensör verisini gerçek zamanlı işler, eşik ihlallerini tespit eder ve bakım operasyonlarını otomatikleştirir.
+Industrial environments generate continuous sensor data, but:
 
-**Temel Yetenekler:**
+- Failures are detected too late → resulting in production downtime and financial loss.
+- Maintenance processes are manual → leading to inevitable human error.
+- No centralized tracking exists → preventing historical data analysis.
+- Enterprise tools are prohibitively expensive → excluding SMEs from advanced monitoring.
 
-| Özellik | Açıklama |
+---
+
+## The Solution
+
+FaultStream processes sensor data in real-time, evaluates threshold violations, and automates maintenance operations.
+
+**Core Capabilities:**
+
+| Feature | Description |
 |---|---|
-| Gerçek Zamanlı Arıza Tespiti | Sensör verisi Kafka üzerinden anlık işlenir |
-| Otomatik Uyarı Üretimi | Eşik aşımlarında sistem otomatik alert oluşturur |
-| İş Emri Yönetimi | Kritik arızalar için iş emri otomatik açılır |
-| Bakım Takibi | Tüm müdahaleler kayıt altına alınır |
-| Ekipman Sağlık İzleme | Her ekipmanın anlık durumu takip edilir |
+| Real-time Fault Detection | Sensor data is processed instantly via Kafka streams. |
+| Automated Alert Generation | The system generates alerts automatically upon threshold violations. |
+| Work Order Orchestration | Critical faults trigger automated work order creation. |
+| Maintenance Tracking | All interventions and repairs are logged for auditing. |
+| Equipment Health Monitoring | Real-time status tracking for every connected machine. |
 
 ---
 
-## Teknoloji Yığını
+## Tech Stack
 
-| Katman | Teknoloji | Amaç |
+| Layer | Technology | Purpose |
 |---|---|---|
-| Çalışma Ortamı | Java 21 | Loom desteği, modern concurrency yapısı |
-| Framework | Spring Boot 3.5 | REST API, DI, güvenlik altyapısı |
-| Veritabanı | PostgreSQL | İlişkisel veri tutarlılığı |
-| Mesaj Kuyruğu | Apache Kafka | Yüksek hacimli sensör verisi akışı |
-| Önbellekleme | Redis | Aktif uyarıların hızlı erişimi |
-| Şema Yönetimi | Flyway | Veritabanı migrasyonlarının sürüm kontrolü |
-| Güvenlik | Spring Security + JWT | Stateless kimlik doğrulama |
-| Konteynerleştirme | Docker & Compose | Tek komutla ayağa kalkan ortam |
-| CI/CD | GitHub Actions | Otomatik derleme ve test koşusu |
-| API Dökümantasyonu | SpringDoc OpenAPI | Swagger UI entegrasyonu |
+| Runtime | Java 21 | Modern concurrency with Project Loom support. |
+| Framework | Spring Boot 3.5 | Core REST API, DI, and security infrastructure. |
+| Database | PostgreSQL | Relational data consistency and integrity. |
+| Message Broker | Apache Kafka | High-throughput ingestion of sensor data streams. |
+| Caching | Redis | Low-latency access to active alerts. |
+| Migration | Flyway | Version-controlled database schema management. |
+| Security | Spring Security + JWT | Stateless authentication and RBAC. |
+| Containerization | Docker & Compose | One-command deployment for development. |
+| CI/CD | GitHub Actions | Automated build and testing pipeline. |
+| Documentation | SpringDoc OpenAPI | Integrated Swagger UI for API exploration. |
 
 ---
 
-## Sistem Mimarisi
+## System Architecture
 
-Aşağıdaki diyagram; verinin sensörlerden üretilmesinden son kullanıcıya ulaşmasına kadar geçtiği tüm katmanları göstermektedir.
+The following diagram illustrates the data flow from physical sensors through the various ingestion and processing layers to the end user.
 
-![FaultStream Sistem Mimarisi](docs/architecture.png)
+![FaultStream System Architecture](docs/architecture.png)
 
-> **Okuma Rehberi:** Sensör verisi Kafka'ya yazılır → Spring Boot tüketicisi mesajları okur → veri hem PostgreSQL'e kaydedilir hem de Uyarı Servisi'ne iletilir. Kritik uyarılar otomatik İş Emri oluşturur; aktif uyarılar Redis'te önbelleğe alınır.
+> **Reading Guide:** Sensor data is published to Kafka → Spring Boot consumers process the messages → Data is persisted to PostgreSQL and simultaneously evaluated by the Alert Service. Critical alerts trigger automated Work Orders; active alerts are cached in Redis.
 
-### Detaylı Akış Diyagramı (Mermaid)
+### Detailed Flow (Mermaid)
 
 ```mermaid
 flowchart LR
-    Sensors["Endüstriyel\nSensörler"] --> Kafka["Apache Kafka\n(Mesaj Kuyruğu)"]
-    Kafka --> Consumer["Spring Boot\nTüketici"]
+    Sensors["Industrial\nSensors"] --> Kafka["Apache Kafka\n(Message Broker)"]
+    Kafka --> Consumer["Spring Boot\nConsumer"]
     Consumer --> DB[(PostgreSQL)]
-    Consumer --> AlertService["Uyarı Servisi"]
-    AlertService --> WorkOrderService["İş Emri Servisi"]
-    AlertService --> Redis[(Redis Önbellek)]
+    Consumer --> AlertService["Alert Service"]
+    AlertService --> WorkOrderService["Work Order Service"]
+    AlertService --> Redis[(Redis Cache)]
     DB --> Dashboard["Dashboard"]
     Dashboard --> API["REST API"]
-    API --> Client["İstemci"]
+    API --> Client["Client"]
 ```
 
 ---
 
-## Veri Akışı
+## Data Flow Pipeline
 
-Sistemin çalışma mantığını adım adım açıklayan görsel aşağıdadır:
+The step-by-step logic of the system is visualized below:
 
-![FaultStream Veri Akışı](docs/dataflow.png)
+![FaultStream Data Flow](docs/dataflow.png)
 
-### Adımlar
+### Steps:
 
-1. **Sensör Verisi Üretilir** — Sıcaklık, titreşim, basınç gibi sensörler anlık okumalar üretir
-2. **Kafka'ya İletilir** — Veriler yüksek verimli mesaj kuyruğuna yazılır; kayıp riski sıfıra iner
-3. **Tüketici İşler** — Spring Boot consumer mesajları okuyarak iş akışını başlatır
-4. **PostgreSQL'e Kaydedilir** — Ham sensör okuması normalleştirilerek ilişkisel veritabanına yazılır
-5. **Eşikler Değerlendirilir** — Her okuma için tanımlanmış normal aralıklar kontrol edilir
-6. **Uyarı Oluşturulur** — İhlal tespit edildiğinde öncelik seviyesiyle (LOW/MEDIUM/HIGH/CRITICAL) uyarı kaydı yapılır
-7. **Kritik Uyarı → İş Emri** — CRITICAL seviyesindeki uyarılar otomatik olarak bir iş emri başlatır
-8. **Redis'e Cache'lenir** — Aktif uyarılar hızlı erişim için Redis'te tutulur; dashboard gecikmesi azalır
-9. **Dashboard Gösterir** — Mühendis/Teknisyen arayüzü anlık durumu görüntüler
+1. **Sensor Data Generation** — Sensors generate real-time readings (temperature, vibration, pressure).
+2. **Kafka Ingestion** — Data is sent to a high-performance message queue ensuring zero data loss.
+3. **Consumer Processing** — Spring Boot consumers ingest messages and initiate the workflow.
+4. **PostgreSQL Persistence** — Normalized sensor readings are stored in the relational database.
+5. **Threshold Evaluation** — Each reading is compared against pre-defined safety ranges.
+6. **Alert Generation** — Violations trigger alert records with severity levels (LOW to CRITICAL).
+7. **Critical Alert → Work Order** — CRITICAL alerts automatically initiate an emergency work order.
+8. **Redis Caching** — Active alerts are cached for instant access, reducing dashboard latency.
+9. **Dashboard Visualization** — The engineer/technician interface displays the real-time status.
 
 ---
 
-## Veritabanı Şeması
+## Database Schema
 
-Sistem, Flyway ile sürüm kontrollü 7 migrasyon dosyasına sahip normalize edilmiş bir şema kullanır.
+The system utilizes a normalized schema versioned via 7 Flyway migration files.
 
 ```mermaid
 erDiagram
@@ -166,217 +166,166 @@ erDiagram
     WORK_ORDERS ||--o{ MAINTENANCE_LOGS : logs
 ```
 
-**Migrasyon Dosyaları:**
+**Migration Files:**
 
 ```
-V1__create_users.sql          → Kullanıcı ve kimlik doğrulama tablosu
-V2__create_equipments.sql     → Ekipman envanter tablosu
-V3__create_sensors.sql        → Sensör meta-veri tablosu
-V4__create_sensor_readings.sql → Zaman serisi okuma tablosu
-V5__create_alerts.sql         → Uyarı ve bildirim tablosu
-V6__create_work_orders.sql    → İş emri yönetim tablosu
-V7__create_maintenance_logs.sql → Bakım geçmişi tablosu
+V1__create_users.sql          → User and authentication schema
+V2__create_equipments.sql     → Equipment inventory schema
+V3__create_sensors.sql        → Sensor metadata schema
+V4__create_sensor_readings.sql → Time-series optimized reading records
+V5__create_alerts.sql         → Alert and notification schema
+V6__create_work_orders.sql    → Work order management schema
+V7__create_maintenance_logs.sql → Historical maintenance logging
 ```
 
 ---
 
-## Kimlik Doğrulama ve Yetkilendirme
+## Authentication & Authorization
 
-FaultStream, stateless (durumsuz) bir güvenlik mimarisi kullanır. Her istek, JWT token ile doğrulanır; token içindeki role bilgisine göre yetkilendirme yapılır.
+FaultStream implements a stateless security architecture. Every request is verified via a JWT token, and authorization is enforced based on role claims within the token.
 
 ```
-Kullanıcı → Login isteği → JWT Token alır → Sonraki isteklerde token gönderir → Spring Security filtre → Role kontrolü → Erişim verilir/reddedilir
+User → Login Request → Receives JWT Token → Subsequent Requests with Token → Spring Security Filter → Role Validation → Access Granted/Denied
 ```
 
-**Roller ve Yetki Seviyeleri:**
+**Roles and Permissions:**
 
-| Rol | Açıklama |
+| Role | Description |
 |---|---|
-| `ADMIN` | Tüm sistem erişimi; kullanıcı yönetimi |
-| `ENGINEER` | Ekipman, sensör ve uyarı yönetimi |
-| `TECHNICIAN` | İş emirlerini görme ve güncelleme |
+| `ADMIN` | Full system access; user management. |
+| `ENGINEER` | Management of equipment, sensors, and alert thresholds. |
+| `TECHNICIAN` | Viewing and updating assigned work orders. |
 
 ---
 
-## Temel Alan Modelleri (Domain)
+## Core Domain Models
 
-### Equipment (Ekipman)
+### Equipment
+Represents physical machinery in the factory. Status (`ACTIVE`, `FAULT`, `MAINTENANCE`) is tracked in real-time.
 
-Fabrikanın sahip olduğu fiziksel makineleri temsil eder. Her ekipmanın durumu (`ACTIVE`, `FAULT`, `MAINTENANCE`) gerçek zamanlı takip edilir.
+### Sensor
+Devices attached to equipment for measurements (e.g., Temperature, Vibration). Each sensor is relationally linked to a specific machine.
 
-### Sensor (Sensör)
+### Alert
+Automatically generated when a sensor reading exceeds defined thresholds. The severity level (LOW to CRITICAL) dictates the subsequent workflow.
 
-Ekipmanlara bağlı ölçüm cihazları. Sıcaklık, titreşim veya basınç okuyabilir. Her sensörün hangi ekipmana ait olduğu ilişkisel olarak tutulur.
+### Work Order
+Critical alerts trigger automated work order creation, including assigned technician, priority, and description.
 
-### Alert (Uyarı)
-
-Bir sensör okuması tanımlı eşiği aştığında sistem otomatik bir uyarı üretir. Uyarının öncelik seviyesi (LOW → CRITICAL) sonraki adımları belirler.
-
-### Work Order (İş Emri)
-
-Kritik uyarılar, insan müdahalesi gerektirmeden otomatik iş emri açar. İş emri; atanan teknisyen, öncelik, açıklama ve durum bilgisi içerir.
-
-### Maintenance Log (Bakım Kaydı)
-
-Her iş emri kapandığında yapılan müdahalenin detayı kayıt altına alınır. Bu sayede geçmişe dönük analiz ve raporlama mümkün olur.
+### Maintenance Log
+Records details of interventions whenever a work order is completed, enabling historical auditing and reporting.
 
 ---
 
-## API Referansı
+## API Reference
 
-### Kimlik Doğrulama
+### Authentication
 
 ```http
 POST /api/v1/auth/register
 POST /api/v1/auth/login
 ```
 
-### Ekipman Yönetimi
+### Equipment Management
 
 ```http
-GET    /api/v1/equipments              # Tüm ekipmanları listele
-POST   /api/v1/equipments              # Yeni ekipman ekle
-GET    /api/v1/equipments/{id}/health  # Ekipman sağlık durumu
+GET    /api/v1/equipments              # List all equipment
+POST   /api/v1/equipments              # Create new equipment
+GET    /api/v1/equipments/{id}/health  # Equipment health status
 ```
 
-### Uyarı Yönetimi
+### Alert Management
 
 ```http
-GET    /api/v1/alerts                     # Tüm uyarıları listele
-POST   /api/v1/alerts/{id}/acknowledge    # Uyarıyı onayla
+GET    /api/v1/alerts                     # List all alerts
+POST   /api/v1/alerts/{id}/acknowledge    # Acknowledge an alert
 ```
 
-### İş Emri Yönetimi
+### Work Order Management
 
 ```http
-GET    /api/v1/work-orders                # İş emirleri listesi
-POST   /api/v1/work-orders                # Manuel iş emri oluştur
-PUT    /api/v1/work-orders/{id}/status    # Durum güncelle
-```
-
-### İş Emri Oluşturma Örneği
-
-**İstek:**
-
-```http
-POST /api/v1/work-orders
-Authorization: Bearer <jwt_token>
-Content-Type: application/json
-```
-
-```json
-{
-  "equipmentId": "uuid",
-  "title": "Yüksek sıcaklık tespit edildi",
-  "description": "Kompresör aşırı ısınıyor",
-  "priority": "HIGH"
-}
-```
-
-**Yanıt:**
-
-```json
-{
-  "id": "uuid",
-  "status": "OPEN",
-  "priority": "HIGH",
-  "created_at": "2026-03-29T07:00:00Z"
-}
+GET    /api/v1/work-orders                # List work orders
+POST   /api/v1/work-orders                # Create manual work order
+PUT    /api/v1/work-orders/{id}/status    # Update status
 ```
 
 ---
 
-## Sistemi Başlatma
+## Getting Started
 
-**Ön Koşullar:** Docker, Java 21+
+**Prerequisites:** Docker, Java 21+
 
 ```bash
-# Repoyu klonla
+# Clone the repository
 git clone https://github.com/bediravsar/faultStream.git
 cd faultStream
 
-# Tüm servisleri ayağa kaldır
+# Spin up all services
 docker-compose up --build
 ```
 
-Başlatılan servisler:
-
+**Services Launched:**
 - **PostgreSQL** → `localhost:5432`
 - **Apache Kafka** → `localhost:9092`
 - **Redis** → `localhost:6379`
-- **Uygulama** → `localhost:8080`
+- **Application** → `localhost:8080`
 - **Swagger UI** → `http://localhost:8080/swagger-ui.html`
 
 ---
 
-## Tasarım Kararları
+## Design Decisions
 
-| Karar | Gerekçe |
+| Decision | Rationale |
 |---|---|
-| **Kafka** tercih edildi | Yüksek frekanslı sensör verisi için geleneksel REST çağrısı yetersiz kalır. Kafka bu yükü buffer'layarak işler. |
-| **PostgreSQL** seçildi | Ekipman → Sensör → Okuma → Uyarı → İş Emri zincirindeki ilişkisel bütünlük kritiktir. |
-| **Redis** kullanıldı | Aktif uyarıların her seferinde veritabanından okunması yetersiz kalır; Redis ile okuma süresi milisaniyeye iner. |
-| **JWT** tercih edildi | Stateless mimari; yatay ölçeklendirmeye izin verir, session yönetimi gerektirmez. |
-| **Flyway** eklendi | Veritabanı şeması kod gibi sürümlenir; takım çalışmasında şema uyumsuzlukları önlenir. |
+| **Apache Kafka** | Traditional REST calls are insufficient for high-frequency sensor streams. Kafka buffers and streams this load efficiently. |
+| **PostgreSQL** | Relational integrity is critical for the Equipment → Sensor → Alert → Work Order chain. |
+| **Redis** | Querying active alerts frequently from the DB is inefficient; Redis reduces access time to milliseconds. |
+| **JWT** | Stateless architecture allows for horizontal scaling without session management overhead. |
+| **Flyway** | Schema versioning prevents inconsistencies across development environments and teams. |
 
 ---
 
-## Proje Durumu
+## Project Status
 
-**Tamamlanan:**
+**Completed:**
+- [x] Java 21 + Spring Boot 3 Core Infrastructure
+- [x] JWT Authentication and RBAC Integration
+- [x] Global Exception Handling and API Standardization
+- [x] Full Database Schema (7 Flyway Migrations)
+- [x] **New:** Equipment Domain Foundation (Entity, Repository, DTOs)
+- [x] Dockerization (PostgreSQL, Kafka, Redis, App)
+- [x] OpenAPI/Swagger UI Integration
 
-- [x] Java 21 + Spring Boot 3 çekirdek altyapısı
-- [x] JWT tabanlı kimlik doğrulama ve RBAC
-- [x] Global hata yönetimi ve API standardizasyonu
-- [x] 7 Flyway migrasyonu ile tam veritabanı şeması
-- [x] Docker Compose ile konteynerleştirme (PostgreSQL, Kafka, Redis, App)
-- [x] OpenAPI/Swagger UI entegrasyonu
+**In Progress:**
+- [ ] Equipment Service and Controller Implementation
+- [ ] Kafka Producer/Consumer Implementation
 
-**Devam Eden:**
-
-- [ ] Kafka Producer/Consumer implementasyonu
-- [ ] Gerçek zamanlı sensör eşik kontrolü
-
-**Planlanan:**
-
-- [ ] Otomatik iş emri atama mantığı
-- [ ] Redis destekli anlık bildirim motoru
-- [ ] Bakım geçmişi raporlama API'si
-- [ ] Dashboard API'si
+**Planned:**
+- [ ] Automated Work Order logic
+- [ ] Redis-backed Notification Engine
+- [ ] Maintenance History Reporting API
+- [ ] Dashboard Visualization API
 
 ---
 
-## Neden Bu Proje Önemli?
+## Contributing
 
-Bu proje basit bir CRUD uygulaması değildir.
+This project is under active development. Contributions, ideas, and feedback are welcome.
 
-Gerçek dünya sistemlerinin gerektirdiği mühendislik kabiliyetlerini ortaya koyar:
+- Found a bug? → [Open an Issue](https://github.com/bediravsar/faultStream/issues)
+- Want to suggest a feature? → [Start a Discussion](https://github.com/bediravsar/faultStream/discussions)
+- Want to contribute? → Fork, branch, and send a PR.
 
-- **Olay Tabanlı Mimari (EDA):** Kafka ile yüksek hacimli asenkron veri işleme
-- **Dağıtık Sistemler:** Birden fazla bağımsız servisin koordinasyonu
-- **Gerçek Zamanlı İşleme:** Sensörden uyarıya milisaniyeler içinde varan tepki süresi
-- **Domain Uzmanlığı:** Makine Mühendisliği bilgisiyle desteklenen endüstriyel sistem tasarımı
-
----
-
-## Katkıda Bulunmak İster Misin?
-
-Bu proje aktif geliştirme aşamasındadır. Her türlü katkı, fikir ve geri bildirim değerlidir.
-
-- Bir hata bulduysan → [Issue aç](https://github.com/bediravsar/faultStream/issues)
-- Bir özellik önermek istiyorsan → [Discussion başlat](https://github.com/bediravsar/faultStream/discussions)
-- Katkıda bulunmak istiyorsan → Fork'la, branch aç, PR gönder
-
-Projeyi yararlı bulduysan **⭐ yıldız vermeyi** unutma — bu projenin daha fazla kişiye ulaşmasına yardımcı olur.
+If you find this project useful, don't forget to **⭐ star** it!
 
 ---
 
-## Yazar
+## Author
 
 **Bedir Avşar**  
-Backend Geliştirici | Makine Mühendisi  
+Backend Developer | Mechanical Engineer  
 [GitHub](https://github.com/bediravsar)
 
 ---
 
-> **Anahtar Kelimeler:** `java` `spring-boot` `kafka` `event-driven-architecture` `iot` `industrial-iot` `fault-detection` `postgresql` `redis` `docker` `jwt` `flyway` `predictive-maintenance` `manufacturing`
+> **Keywords:** `java` `spring-boot` `kafka` `event-driven-architecture` `iot` `industrial-iot` `fault-detection` `postgresql` `redis` `docker` `jwt` `flyway` `predictive-maintenance` `manufacturing`
