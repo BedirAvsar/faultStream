@@ -95,7 +95,7 @@ The step-by-step logic of the system is visualized below:
 
 ![FaultStream Data Flow](docs/dataflow.png)
 
-### Steps:
+### Steps
 
 1. **Sensor Data Generation** — Sensors generate real-time readings (temperature, vibration, pressure).
 2. **Kafka Ingestion** — Data is sent to a high-performance message queue ensuring zero data loss.
@@ -201,18 +201,23 @@ User → Login Request → Receives JWT Token → Subsequent Requests with Token
 ## Core Domain Models
 
 ### Equipment
+
 Represents physical machinery in the factory. Status (`ACTIVE`, `FAULT`, `MAINTENANCE`) is tracked in real-time.
 
 ### Sensor
+
 Devices attached to equipment for measurements (e.g., Temperature, Vibration). Each sensor is relationally linked to a specific machine.
 
 ### Alert
+
 Automatically generated when a sensor reading exceeds defined thresholds. The severity level (LOW to CRITICAL) dictates the subsequent workflow.
 
 ### Work Order
+
 Critical alerts trigger automated work order creation, including assigned technician, priority, and description.
 
 ### Maintenance Log
+
 Records details of interventions whenever a work order is completed, enabling historical auditing and reporting.
 
 ---
@@ -265,6 +270,7 @@ docker-compose up --build
 ```
 
 **Services Launched:**
+
 - **PostgreSQL** → `localhost:5432`
 - **Apache Kafka** → `localhost:9092`
 - **Redis** → `localhost:6379`
@@ -288,6 +294,7 @@ docker-compose up --build
 ## Project Status
 
 **Completed:**
+
 - [x] Java 21 + Spring Boot 3 Core Infrastructure
 - [x] JWT Authentication and RBAC Integration
 - [x] Global Exception Handling and API Standardization
@@ -297,10 +304,12 @@ docker-compose up --build
 - [x] OpenAPI/Swagger UI Integration
 
 **In Progress:**
+
 - [ ] Equipment Service and Controller Implementation
 - [ ] Kafka Producer/Consumer Implementation
 
 **Planned:**
+
 - [ ] Automated Work Order logic
 - [ ] Redis-backed Notification Engine
 - [ ] Maintenance History Reporting API
