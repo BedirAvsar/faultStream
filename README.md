@@ -95,7 +95,7 @@ Sistemin çalışma mantığını adım adım açıklayan görsel aşağıdadır
 
 ![FaultStream Veri Akışı](docs/dataflow.png)
 
-### Adımlar:
+### Adımlar
 
 1. **Sensör Verisi Üretilir** — Sıcaklık, titreşim, basınç gibi sensörler anlık okumalar üretir
 2. **Kafka'ya İletilir** — Veriler yüksek verimli mesaj kuyruğuna yazılır; kayıp riski sıfıra iner
@@ -201,18 +201,23 @@ Kullanıcı → Login isteği → JWT Token alır → Sonraki isteklerde token g
 ## Temel Alan Modelleri (Domain)
 
 ### Equipment (Ekipman)
+
 Fabrikanın sahip olduğu fiziksel makineleri temsil eder. Her ekipmanın durumu (`ACTIVE`, `FAULT`, `MAINTENANCE`) gerçek zamanlı takip edilir.
 
 ### Sensor (Sensör)
+
 Ekipmanlara bağlı ölçüm cihazları. Sıcaklık, titreşim veya basınç okuyabilir. Her sensörün hangi ekipmana ait olduğu ilişkisel olarak tutulur.
 
 ### Alert (Uyarı)
+
 Bir sensör okuması tanımlı eşiği aştığında sistem otomatik bir uyarı üretir. Uyarının öncelik seviyesi (LOW → CRITICAL) sonraki adımları belirler.
 
 ### Work Order (İş Emri)
+
 Kritik uyarılar, insan müdahalesi gerektirmeden otomatik iş emri açar. İş emri; atanan teknisyen, öncelik, açıklama ve durum bilgisi içerir.
 
 ### Maintenance Log (Bakım Kaydı)
+
 Her iş emri kapandığında yapılan müdahalenin detayı kayıt altına alınır. Bu sayede geçmişe dönük analiz ve raporlama mümkün olur.
 
 ---
@@ -252,6 +257,7 @@ PUT    /api/v1/work-orders/{id}/status    # Durum güncelle
 ### İş Emri Oluşturma Örneği
 
 **İstek:**
+
 ```http
 POST /api/v1/work-orders
 Authorization: Bearer <jwt_token>
@@ -268,6 +274,7 @@ Content-Type: application/json
 ```
 
 **Yanıt:**
+
 ```json
 {
   "id": "uuid",
@@ -293,6 +300,7 @@ docker-compose up --build
 ```
 
 Başlatılan servisler:
+
 - **PostgreSQL** → `localhost:5432`
 - **Apache Kafka** → `localhost:9092`
 - **Redis** → `localhost:6379`
@@ -316,6 +324,7 @@ Başlatılan servisler:
 ## Proje Durumu
 
 **Tamamlanan:**
+
 - [x] Java 21 + Spring Boot 3 çekirdek altyapısı
 - [x] JWT tabanlı kimlik doğrulama ve RBAC
 - [x] Global hata yönetimi ve API standardizasyonu
@@ -324,10 +333,12 @@ Başlatılan servisler:
 - [x] OpenAPI/Swagger UI entegrasyonu
 
 **Devam Eden:**
+
 - [ ] Kafka Producer/Consumer implementasyonu
 - [ ] Gerçek zamanlı sensör eşik kontrolü
 
 **Planlanan:**
+
 - [ ] Otomatik iş emri atama mantığı
 - [ ] Redis destekli anlık bildirim motoru
 - [ ] Bakım geçmişi raporlama API'si
@@ -367,7 +378,3 @@ Backend Geliştirici | Makine Mühendisi
 [GitHub](https://github.com/bediravsar)
 
 ---
-
-> **Anahtar Kelimeler:** `java` `spring-boot` `kafka` `event-driven-architecture` `iot` `industrial-iot` `fault-detection` `postgresql` `redis` `docker` `jwt` `flyway` `predictive-maintenance` `manufacturing`
->
-> *Bu anahtar kelimeleri GitHub repo ayarlarındaki **Topics** alanına ekleyerek projenin arama sonuçlarında görünmesini sağla.*
