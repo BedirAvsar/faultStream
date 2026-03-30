@@ -379,4 +379,3 @@ Backend Geliştirici | Makine Mühendisi
 
 ---
 
-> **Anahtar Kelimeler:** `java` `spring-boot` `kafka` `event-driven-architecture` `iot` `industrial-iot` `fault-detection` `postgresql` `redis` `docker` `jwt` `flyway` `predictive-maintenance` `manufacturing`
