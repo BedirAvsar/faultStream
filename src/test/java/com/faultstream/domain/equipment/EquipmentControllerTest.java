@@ -51,6 +51,7 @@ import java.util.UUID;
 @WebMvcTest(controllers = EquipmentController.class)
 @AutoConfigureMockMvc(addFilters = false)
 // JWT Security ayarlarını testten hariç tutmak için addFilters = false ekledim
+@SuppressWarnings("null")
 class EquipmentControllerTest {
 
     @Autowired

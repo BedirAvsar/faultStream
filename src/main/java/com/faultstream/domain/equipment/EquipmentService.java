@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@SuppressWarnings("null")
 public class EquipmentService {
 
     private final EquipmentRepository equipmentRepository;
