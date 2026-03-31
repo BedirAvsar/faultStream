@@ -29,6 +29,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import com.faultstream.security.JwtService;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import com.faultstream.security.JwtAuthFilter;
+import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import com.faultstream.domain.equipment.dto.CreateEquipmentRequest;
 
 // MockMvc için gerekli kütüphaneler
 import static org.mockito.Mockito.when;
@@ -46,19 +52,28 @@ import java.util.UUID;
 @AutoConfigureMockMvc(addFilters = false)
 // JWT Security ayarlarını testten hariç tutmak için addFilters = false ekledim
 class EquipmentControllerTest {
-    
+
     @Autowired
     private MockMvc mockMvc;
 
-    // JSON dönüşümleri için ObjectMapper'ı (POST isteği hazırlığı) getirdik.
+    // JSON dönüşümleri için ObjectMapper'ı (POST isteği hazırlığı) getirdim
     @Autowired
     private ObjectMapper objectMapper;
 
-    // Controller içine koyduğum beyin kısmıydı ancak test olduğu sahtesini veriyorum
+    // Controller içine koyduğum beyin kısmıydı ancak test olduğu sahtesini
+    // veriyorum
     @MockitoBean
     private EquipmentService equipmentService;
+    // Bodyguard'larımızın da sahtesini yaratıp sisteme ekliyorum
+    @MockitoBean
+    private JwtService jwtService;
 
-    // HATA BURADAYDI: Sınıf seviyesinde tanımlanmayı unutmuştu
+    @MockitoBean
+    private UserDetailsService userDetailsService;
+
+    @MockitoBean
+    private JwtAuthFilter jwtAuthFilter;
+
     private EquipmentResponse equipmentResponse;
 
     // Hazırlık metodum
@@ -66,24 +81,45 @@ class EquipmentControllerTest {
     void setUp() {
         // Obje kurulumları
         equipmentResponse = EquipmentResponse.builder()
-        .id(UUID.randomUUID())
-        .name("Test Kompresörü")
-        .type(EquipmentType.COMPRESSOR)
-        .status(EquipmentStatus.ACTIVE)
-        .location("A Blok")
-        .build();
+                .id(UUID.randomUUID())
+                .name("Test Kompresörü")
+                .type(EquipmentType.COMPRESSOR)
+                .status(EquipmentStatus.ACTIVE)
+                .location("A Blok")
+                .build();
     }
 
     // İlk test: Tüm makineleri listeleme
     @Test
     void getAllEquipments_ShouldReturnList_WhenEquipmentsExist() throws Exception {
-        
+
         when(equipmentService.getAllEquipments()).thenReturn(List.of(equipmentResponse));
-    
+
         mockMvc.perform(get("/api/v1/equipments"))
-               .andExpect(status().isOk()) // HTTP 200 OK Bekliyorum
-               .andExpect(jsonPath("$.success").value(true)) // Bizim ApiResponse'un success alanı True mu?
-               .andExpect(jsonPath("$.data[0].name").value("Test Kompresörü")) // İçindeki isme kadar kontrol!
-               .andExpect(jsonPath("$.data[0].type").value("COMPRESSOR"));
+                .andExpect(status().isOk()) // HTTP 200 OK Bekliyorum
+                .andExpect(jsonPath("$.success").value(true)) // Bizim ApiResponse'un success alanı True mu?
+                .andExpect(jsonPath("$.data[0].name").value("Test Kompresörü")) // İçindeki isme kadar kontrol!
+                .andExpect(jsonPath("$.data[0].type").value("COMPRESSOR"));
+
     }
+
+    // Yeni Makine Yaratma
+    @Test
+    void createEquipment_ShouldReturn201_WhenValidRequest() throws Exception {
+        // POST edeceğimiz sahte bir istek oluştur
+        CreateEquipmentRequest request = new CreateEquipmentRequest();
+        request.setName("Yeni Pompa");
+        request.setType(EquipmentType.PUMP);
+        request.setLocation("C Blok");
+
+        when(equipmentService.createEquipment(any(CreateEquipmentRequest.class))).thenReturn(equipmentResponse);
+
+        // Postman simülasyonu
+        mockMvc.perform(post("/api/v1/equipments")
+                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.success").value(true));
+    }
+
 }
