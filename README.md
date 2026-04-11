@@ -44,7 +44,7 @@ Platform; reaktif bakimdan **tam otonom, veri odakli operasyon modeline** gecmek
 
 > Core Diagnostics Terminal — gercek zamanli ekipman olay akisi, oruntu analizi ve anomali yogunlugu takibi.
 
-![FaultStream Dashboard](docs/screenshots/dashboard-demo.png)
+![FaultStream Dashboard](docs/screenshots/dashboard-ekrani.png)
 
 NOC tasarimindan ilham alan karanlik arayuz, tek bakista operasyonel farkindalik saglar:
 
@@ -64,7 +64,7 @@ NOC tasarimindan ilham alan karanlik arayuz, tek bakista operasyonel farkindalik
 
 > Gelistirme ve hazirlama ortami — Ubuntu 24.04, Intel i5-11300H, 15.3 GiB RAM, 467G NVMe depolama.
 
-![Sistem Izleyici](docs/screenshots/system-btop.png)
+![Sistem Izleyici](docs/screenshots/btop-ekrani.png)
 
 Platform, tam stack'i (PostgreSQL + Kafka + Zookeeper + Redis + Spring Boot + Next.js) tek bir gelistirici is istasyonunda calistiracak sekilde optimize edilmistir. Uretim ortami dagitimi, servis basina ayri pod'larla Kubernetes uzerinde hedeflenmektedir.
 
@@ -414,6 +414,30 @@ faultstream/
 | **v4.0.0** | Alarm & Is Emri domain · Esik degerlendirme · Otomatik atama · Redis onbellek | Planlandi |
 | **v5.0.0** | Bakim Kaydi · DashboardController · SSE canli entegrasyon · Testcontainers | Planlandi |
 | **v6.0.0** | Spring Actuator · Prometheus · Grafana · Spring AI tahminsel tehsis | Planlandi |
+
+### Gelecek Fazlar Detaylı Hedefleri
+
+Aşağıdaki liste `ROADMAP.md` belgesindeki geleceğe dönük kritik aşamaları özetler:
+
+#### v3.0.0 — Sensor Data & Event Streaming
+- `Sensor` ve `SensorReading` Domain altyapısının kurulması.
+- `SensorSimulatorScheduler` ile Kafka'ya rastgele verilerin aktarılması.
+- `SensorDataConsumer` ile akan verilerin ayrıştırılması.
+
+#### v4.0.0 — Autonomous Alerting & Work Orders
+- Sensör akışında anomali tespit edildiğinde otonom `Alert` üretimi.
+- Kritik alarmlarda insan müdahalesi olmadan `WorkOrder` (İş Emri) atanması.
+- Performans için aktif alarmların `Redis` ile önbelleklenmesi.
+
+#### v5.0.0 — Maintenance Tracking & Full API Integration
+- `MaintenanceLog` ile her iş emrinin log tarihçesinin tutulması.
+- Next.js Dashboard'una Mock veri yerine `DashboardController` ile gerçek Canlı Akış entegrasyonu.
+- H2 veritabanı testlerinin iptal edilip, `Testcontainers` (Gerçek PostgreSQL container'ı) üzerinden e2e (uçtan uca) test yapısının inşa edilmesi.
+
+#### v6.0.0 — Observability & Artificial Intelligence
+- Spring Boot Actuator, Micrometer ve Prometheus izleme araçlarının kurulması.
+- `Grafana` ile JVM kullanımı, Kafka verimi ve CPU izlemesi için görselleştirme.
+- OpenAI altyapısına bağlanarak bakım loglarını analiz ettirip, yapay zekanın "Olası Arıza Tahmini" sunacağı bir `DiagnosisService` (Akıllı Teşhis) yazılması.
 
 ---
 
