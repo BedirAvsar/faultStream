@@ -22,6 +22,11 @@
 
 **Hedef:** Makinelerin nabzını dinlemeye ve verileri akıtmaya başlamak.
 
+- [ ] **Sensor Domain:** Sensör ve Sensör Okumaları (SensorReading) Entity, Repo, Servis modülleri.
+- [ ] **Flyway:** V3 ve V4 veritabanı göç (migration) SQL'lerinin yazılması.
+- [ ] **Kafka Producer:** `SensorSimulatorScheduler` ile arka planda sensör değerleri üretip Kafka'ya (sensor-readings) basmak.
+- [ ] **Kafka Consumer:** Sensör verilerini Kafka'dan okuyan ana `SensorDataConsumer` servisinin yazılması.
+
 ### Zorunlu Görevler
 
 - [ ] `Sensor` Entity oluştur (id, name, equipmentId, type, unit, location)
@@ -50,6 +55,12 @@
 ## [ ] v4.0.0 — Autonomous Alerting & Work Orders
 
 **Hedef:** Sisteme "beyin" eklemek. İnsan müdahalesi olmadan tehditleri algılayıp müdahale başlatan yapı.
+
+- [ ] **Gereksinimler:** Alert ve WorkOrder (İş Emri) Domain'lerinin (Entity, Servis, vs.) kodlanması.
+- [ ] **Flyway:** V5 ve V6 veritabanı tablolarının oluşturulması.
+- [ ] **Otonom Algılama:** Kafka Consumer içine "Eşik Değeri (Threshold)" kontrolleri eklenmesi.
+- [ ] **Otomasyon:** Değer aşılırsa otomatik ALARM üretilmesi, seviye CRITICAL ise mühendisten bağımsız doğrudan TEKNİSYEN'e İş Emri atanması.
+- [ ] **Performans:** Redis Cache kullanılarak anlık alarm durumlarının ve Dashboard verilerinin bellekte tutulması (Veritabanı yükünü %80 azaltma).
 
 ### Zorunlu Görevler
 
@@ -83,6 +94,11 @@
 
 **Hedef:** Teknolojiyi birleştirmek. Next.js ile Spring Boot'un gerçek anlamda haberleşmesi ve bakım geçmişinin tutulması.
 
+- [ ] **Maintenance Domain:** Bakım Logları (MaintenanceLog) yapısının kodlanması ve V7 SQL script'i.
+- [ ] **Dashboard API:** Frontend'in ihtiyaç duyduğu istatistikler için `DashboardController` uçlarının (endpoint) Redis destekli hazırlanması.
+- [ ] **Frontend Live Integration:** Next.js Dashboard'daki "Mock (Sahte)" döngünün silinip, SSE veya REST ile gerçek Spring Boot verilerine bağlanması.
+- [ ] **Testcontainers:** Lokal H2 veritabanı testlerinin iptal edilip, gerçek Docker-Postgres container'larında end-to-end (uçtan uca) Integration Testlerin yazılması.
+
 ### Zorunlu Görevler
 
 - [ ] `MaintenanceLog` Entity oluştur (id, workOrderId, equipmentId, technicianId, action, duration, parts, cost, createdAt)
@@ -114,6 +130,10 @@
 ## [ ] v6.0.0 — Observability & Artificial Intelligence
 
 **Hedef:** Sistemi kurumsal bir dev haline getirmek.
+
+- [ ] **Metrik İzleme:** Spring Boot Actuator ve Prometheus entegrasyonu.
+- [ ] **Grafana:** RAM, CPU, Kafka Lag (Veri birikmesi) metriklerinin görsel Grafana panellerine dökülmesi.
+- [ ] **AI Entegrasyonu:** Spring AI (OpenAI API) eklenerek "Akıllı Teşhis" modülü oluşturulması (Örn: AI'ın geçmiş bakım loglarını okuyup *"Turbine-01 motorunda yatak arızası ihtimali var"* tahmini yapması).
 
 ### Zorunlu Görevler
 
