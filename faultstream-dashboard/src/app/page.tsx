@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { 
   Activity, AlertTriangle, Cpu, Thermometer, Zap, WifiOff 
@@ -7,24 +6,19 @@ import {
 import { 
   PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer
 } from "recharts";
-
-// -- FAULTSTREAM CORE MOCK --
 const FAULT_TYPES = [
-  { type: "SYS_DESYNC", icon: Cpu, color: "#eab308" },      // Yellow
-  { type: "THERMAL_OVERLOAD", icon: Thermometer, color: "#ef4444" }, // Red
-  { type: "VOLTAGE_DROP", icon: Zap, color: "#f97316" },      // Orange
-  { type: "LINK_FAILURE", icon: WifiOff, color: "#52525b" }   // Gray
+  { type: "SYS_DESYNC", icon: Cpu, color: "#eab308" },      
+  { type: "THERMAL_OVERLOAD", icon: Thermometer, color: "#ef4444" }, 
+  { type: "VOLTAGE_DROP", icon: Zap, color: "#f97316" },      
+  { type: "LINK_FAILURE", icon: WifiOff, color: "#52525b" }   
 ];
 const EQUIPMENTS = ["TRB-01", "CNV-A", "PMP-B", "HUB-X", "GEN-04"];
-
 export default function Dashboard() {
   const [logs, setLogs] = useState<any[]>([]);
   const [stats, setStats] = useState({ active: 42, total: 23, health: 94.1 });
-
   useEffect(() => {
     const initialLogs = Array.from({ length: 9 }).map((_, i) => createRandomLog(i));
     setLogs(initialLogs.reverse());
-
     const interval = setInterval(() => {
       setLogs((prev) => [createRandomLog(Math.random()), ...prev].slice(0, 9));
       setStats(prev => ({
@@ -33,10 +27,8 @@ export default function Dashboard() {
         health: Math.max(70, Math.min(100, prev.health + (Math.random() > 0.5 ? -0.3 : 0.1)))
       }));
     }, 3500);
-
     return () => clearInterval(interval);
   }, []);
-
   function createRandomLog(idSeed: number) {
     const fault = FAULT_TYPES[Math.floor(Math.random() * FAULT_TYPES.length)];
     return {
@@ -48,7 +40,6 @@ export default function Dashboard() {
       color: fault.color
     };
   }
-
   const pieData = [
     { name: "SYS_DESYNC", value: 45, color: "#eab308" },
     { name: "THERMAL", value: 20, color: "#ef4444" },
@@ -59,11 +50,9 @@ export default function Dashboard() {
     { name: "D-6", faults: 12 }, { name: "D-5", faults: 19 }, { name: "D-4", faults: 15 },
     { name: "D-3", faults: 22 }, { name: "D-2", faults: 18 }, { name: "D-1", faults: 8 }, { name: "NOW", faults: 5 },
   ];
-
   return (
     <div className="min-h-screen bg-black text-zinc-300 p-8 font-mono selection:bg-zinc-800">
-      
-      {/* HEADER : RAW & INDUSTRIAL */}
+      {}
       <header className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-4 border-b border-zinc-900">
         <div>
           <div className="flex items-center gap-3 mb-2">
@@ -80,8 +69,7 @@ export default function Dashboard() {
           <span className="text-[10px] text-zinc-500 tracking-widest">KAFKA_LINK: LIVE</span>
         </div>
       </header>
-
-      {/* RAW METRICS */}
+      {}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
         <div className="flex flex-col border-l border-zinc-800 pl-4">
           <span className="text-[10px] text-zinc-500 uppercase tracking-widest mb-2">Active_Nodes</span>
@@ -103,15 +91,12 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-        
-        {/* LOG STREAM */}
+        {}
         <div className="lg:col-span-8 flex flex-col">
           <div className="flex items-end justify-between mb-4 border-b border-zinc-900 pb-2">
-            <h2 className="text-[10px] text-zinc-500 tracking-widest uppercase">Stream // equipment.events</h2>
+            <h2 className="text-[10px] text-zinc-500 tracking-widest uppercase">Stream [equipment.events]</h2>
           </div>
-          
           <div className="w-full">
             <div className="grid grid-cols-4 text-[10px] text-zinc-600 tracking-widest uppercase mb-4 px-2">
               <div>Time</div>
@@ -137,14 +122,12 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-
-        {/* ANALYTICS */}
+        {}
         <div className="lg:col-span-4 flex flex-col gap-12">
-          
           <div>
             <h2 className="text-[10px] text-zinc-500 tracking-widest uppercase mb-4 border-b border-zinc-900 pb-2">Pattern_Analysis</h2>
-            <div className="h-[180px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="h-[180px] w-full min-h-[180px]">
+              <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                 <PieChart>
                   <Pie data={pieData} cx="50%" cy="50%" innerRadius={55} outerRadius={70} paddingAngle={2} dataKey="value" stroke="none">
                     {pieData.map((entry, index) => (<Cell key={`cell-${index}`} fill={entry.color} />))}
@@ -165,11 +148,10 @@ export default function Dashboard() {
               ))}
             </div>
           </div>
-
           <div>
             <h2 className="text-[10px] text-zinc-500 tracking-widest uppercase mb-4 border-b border-zinc-900 pb-2">Freq_Density [7D]</h2>
-            <div className="h-[120px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="h-[120px] w-full min-h-[120px]">
+              <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                 <BarChart data={barData} margin={{ top: 0, right: 0, left: -30, bottom: 0 }}>
                   <XAxis dataKey="name" stroke="#3f3f46" fontSize={9} tickLine={false} axisLine={false} />
                   <YAxis stroke="#3f3f46" fontSize={9} tickLine={false} axisLine={false} />
@@ -182,10 +164,8 @@ export default function Dashboard() {
               </ResponsiveContainer>
             </div>
           </div>
-
         </div>
       </div>
-      
     </div>
   );
 }
