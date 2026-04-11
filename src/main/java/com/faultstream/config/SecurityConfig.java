@@ -1,8 +1,6 @@
 package com.faultstream.config;
-
 import com.faultstream.security.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -26,8 +23,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
     private final UserDetailsService userDetailsService;
-
-    // SECURITY
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -50,36 +45,20 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
-    // ENCRYPTION
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    // AUTHENTICATION
     @Bean
     @SuppressWarnings("deprecation")
     public AuthenticationProvider authenticationProvider() {
-
-        /*
-         * Peki neden?
-         * Çünkü Spring Security "Ben kimim?" diye soruyor
-         * 1. UserDetailsService: "Benim veritabanı bağlantım nerede?"
-         * 2. PasswordEncoder: "Ben şifreleri nasıl çözerim?"
-         * 3. AuthenticationProvider: "Ben kullanıcıyı nasıl doğrulayacağım?"
-         * İŞTE BURASI BU KARARI VEREN YER
-         */
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
-
-    // AUTH MANAGER
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
 }

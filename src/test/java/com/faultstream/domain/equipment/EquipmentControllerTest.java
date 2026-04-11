@@ -1,27 +1,4 @@
-/* ====================== NOTLAR ====================== */
-
-/**
- * Amacım dışarıdan gelen HTTP isteklerini test etmek
- * Neden @WebMvcTest kullandım?
- * Çünkü sadece Controller katmanını test etmek istiyorum tüm projenin ayağa kalkmasını istemiyorum
- * Neden @AutoConfigureMockMvc kullandım?
- * Projemde JWT var eğer bunu yazmazsam SecurityConfig yüzünden 404 hatası alırım
- * Neden @MockitoBean kullandım?
- * Eski sürümlerde @MockBean kullanılıyormuş ancak Spring Boot 3.4 ile bu değişmiş tam olarak 21 Kasım 2024 tarihinde
- * 
- * Tüm bunları nereden biliyor ve neden açıklıyorum?
- * Zamanımın çoğusu bu kodları ve sistemleri araştırmakla geçiyor
- * Elbette 2026 yılında bu sektörün gerçeği olan yapay zekayı kullanıyorum
- * Ancak herşeyi yapay zekaya bırakmak yerine mantığını anlamaya çalışıyorum
- * Mimariyi kuruyor ve kararlar alıyorum nedenini sorguluyorum
- * Tüm kodları ellerimle yazıyorum (bunu gönderdiğim commitler arası sürelerden anlayabilirsiniz)
- * Aramızda bir Senior-Developer ilişkisi var
- * Aldığım tüm kararları ve araştırmalarımı not alıyorum
- * Saygılarımla Bedir Avşar :)
-*/
-
 package com.faultstream.domain.equipment;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,52 +12,33 @@ import com.faultstream.security.JwtAuthFilter;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import com.faultstream.domain.equipment.dto.CreateEquipmentRequest;
-
-// MockMvc için gerekli kütüphaneler
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.faultstream.domain.equipment.dto.EquipmentResponse;
-
 import java.util.List;
 import java.util.UUID;
-
 @WebMvcTest(controllers = EquipmentController.class)
 @AutoConfigureMockMvc(addFilters = false)
-// JWT Security ayarlarını testten hariç tutmak için addFilters = false ekledim
 @SuppressWarnings("null")
 class EquipmentControllerTest {
-
     @Autowired
     private MockMvc mockMvc;
-
-    // JSON dönüşümleri için ObjectMapper'ı (POST isteği hazırlığı) getirdim
     @Autowired
     private ObjectMapper objectMapper;
-
-    // Controller içine koyduğum beyin kısmıydı ancak test olduğu sahtesini
-    // veriyorum
     @MockitoBean
     private EquipmentService equipmentService;
-    // Bodyguard'larımızın da sahtesini yaratıp sisteme ekliyorum
     @MockitoBean
     private JwtService jwtService;
-
     @MockitoBean
     private UserDetailsService userDetailsService;
-
     @MockitoBean
     private JwtAuthFilter jwtAuthFilter;
-
     private EquipmentResponse equipmentResponse;
-
-    // Hazırlık metodum
     @BeforeEach
     void setUp() {
-        // Obje kurulumları
         equipmentResponse = EquipmentResponse.builder()
                 .id(UUID.randomUUID())
                 .name("Test Kompresörü")
@@ -89,38 +47,26 @@ class EquipmentControllerTest {
                 .location("A Blok")
                 .build();
     }
-
-    // İlk test: Tüm makineleri listeleme
     @Test
     void getAllEquipments_ShouldReturnList_WhenEquipmentsExist() throws Exception {
-
         when(equipmentService.getAllEquipments()).thenReturn(List.of(equipmentResponse));
-
         mockMvc.perform(get("/api/v1/equipments"))
-                .andExpect(status().isOk()) // HTTP 200 OK Bekliyorum
-                .andExpect(jsonPath("$.success").value(true)) // Bizim ApiResponse'un success alanı True mu?
-                .andExpect(jsonPath("$.data[0].name").value("Test Kompresörü")) // İçindeki isme kadar kontrol!
+                .andExpect(status().isOk()) 
+                .andExpect(jsonPath("$.success").value(true)) 
+                .andExpect(jsonPath("$.data[0].name").value("Test Kompresörü")) 
                 .andExpect(jsonPath("$.data[0].type").value("COMPRESSOR"));
-
     }
-
-    // Yeni Makine Yaratma
     @Test
     void createEquipment_ShouldReturn201_WhenValidRequest() throws Exception {
-        // POST edeceğimiz sahte bir istek oluştur
         CreateEquipmentRequest request = new CreateEquipmentRequest();
         request.setName("Yeni Pompa");
         request.setType(EquipmentType.PUMP);
         request.setLocation("C Blok");
-
         when(equipmentService.createEquipment(any(CreateEquipmentRequest.class))).thenReturn(equipmentResponse);
-
-        // Postman simülasyonu
         mockMvc.perform(post("/api/v1/equipments")
                 .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.success").value(true));
     }
-
 }
