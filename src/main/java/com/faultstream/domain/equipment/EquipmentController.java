@@ -32,4 +32,11 @@ public class EquipmentController {
         EquipmentResponse response = equipmentService.getEquipmentById(id);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(response, "Ekipman başarıyla getirildi"));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteEquipment(@PathVariable UUID id) {
+        equipmentService.deleteEquipment(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ApiResponse.success(null, "Ekipman başarıyla silindi"));
+    }
 }

@@ -40,6 +40,15 @@ public class EquipmentService {
                 .map(this::mapToResponse)
                 .orElseThrow(() -> new RuntimeException("Ekipman bulunamadı!"));
     }
+    
+    @Transactional
+    public void deleteEquipment(UUID id) {
+        if (!equipmentRepository.existsById(id)) {
+            throw new RuntimeException("Silinecek ekipman bulunamadı!");
+        }
+        equipmentRepository.deleteById(id);
+    }
+
     private EquipmentResponse mapToResponse(Equipment equipment) {
         return EquipmentResponse.builder()
                 .id(equipment.getId())
