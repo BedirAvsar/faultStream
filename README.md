@@ -1,614 +1,390 @@
-<div align="center">
+# FaultStream
 
-```
-███████╗ █████╗ ██╗   ██╗██╗  ████████╗███████╗████████╗██████╗ ███████╗ █████╗ ███╗   ███╗
-██╔════╝██╔══██╗██║   ██║██║  ╚══██╔══╝██╔════╝╚══██╔══╝██╔══██╗██╔════╝██╔══██╗████╗ ████║
-█████╗  ███████║██║   ██║██║     ██║   ███████╗   ██║   ██████╔╝█████╗  ███████║██╔████╔██║
-██╔══╝  ██╔══██║██║   ██║██║     ██║   ╚════██║   ██║   ██╔══██╗██╔══╝  ██╔══██║██║╚██╔╝██║
-██║     ██║  ██║╚██████╔╝███████╗██║   ███████║   ██║   ██║  ██║███████╗██║  ██║██║ ╚═╝ ██║
-╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝
-```
+FaultStream, Spring Boot + Next.js tabanli bir endustriyel izleme projesidir. Su anki calisan cekirdek akis:
 
-**Endüstriyel IoT İzleme & Otonom Arıza Tespit Platformu**
+- backend tarafinda auth, equipment, sensor ve dashboard domain'leri
+- simulator ile demo sensor verisi uretimi
+- sensor reading'lerin veritabanina yazilmasi
+- dashboard'in backend'den gercek veri cekmesi
 
-*Gerçek zamanlı sensör akışı · Otonom alarm yönetimi · Yapay zeka destekli teşhis*
+Bu README, projeyi sifirdan kurup ayaga kaldirmak icin yazildi.
 
----
+## Su an ne calisiyor
 
-[![Java](https://img.shields.io/badge/Java-21-ED8B00?style=flat-square&logo=openjdk&logoColor=white)](https://openjdk.org/)
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=flat-square&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
-[![Next.js](https://img.shields.io/badge/Next.js-14-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
-[![Apache Kafka](https://img.shields.io/badge/Apache_Kafka-3.x-231F20?style=flat-square&logo=apachekafka&logoColor=white)](https://kafka.apache.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-316192?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Redis](https://img.shields.io/badge/Redis-7.x-DC382D?style=flat-square&logo=redis&logoColor=white)](https://redis.io/)
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
-[![Lisans](https://img.shields.io/badge/Lisans-MIT-yellow?style=flat-square)](LICENSE)
-[![Surum](https://img.shields.io/badge/Surum-2.1.0-brightgreen?style=flat-square)]()
-[![Durum](https://img.shields.io/badge/Durum-Aktif_Gelistirme-blue?style=flat-square)]()
+Bugun itibariyla repo icinde aktif olarak bulunan ana parcalar:
 
-</div>
+- `Spring Boot` backend
+- `PostgreSQL`, `Kafka`, `Zookeeper`, `Redis` altyapisi
+- `Next.js` dashboard
+- demo equipment + sensor seed verisi
+- demo user seed verisi
+- alert, work-order ve maintenance log domain'leri
+- `/api/v1/dashboard/terminal` endpoint'i
+- Swagger UI
 
----
+Planlanip henuz tam bitmemis alanlar:
 
-## Genel Bakis
+- alert / work-order domain'leri
+- maintenance log
+- AI modulleri
+- tam entegrasyon testleri
 
-FaultStream; gercek zamanli ekipman izleme, otonom ariza tespiti ve onleyici bakim icin gelistirilmis **kurumsal duzey bir Endustriyel IoT platformudur**. Modern event-driven (olay odakli) mimari uzerine insa edilen sistem, Apache Kafka araciligiyla yuksek frekansi sensor verilerini isler, akilli esik kurallari uygular ve insan mudahalesi olmaksizin teknisyenlere otomatik is emri atar.
+## Gereksinimler
 
-Platform; reaktif bakimdan **tam otonom, veri odakli operasyon modeline** gecmek isteyen uretim tesisleri, OEM operatorler ve altyapi yoneticilerini hedeflemektedir.
+Projeyi lokal makinede calistirmak icin sunlar gerekli:
 
-> **Tasarim felsefesi:** FaultStream, akis-oncelikli (stream-first) bir sistemdir. Her sensor okumasi, alarm olayi ve durum degisikligi Kafka uzerinden akar. Bu sayede yatay olceklenebilirlik, hata toleransi ve ham veriden cozume uzanan tam denetim kaydi saglanir.
+- `Java 21`
+- `Node.js 20+`
+- `Docker Desktop` veya Docker Engine
+- `Docker Compose`
 
----
+Opsiyonel:
 
-## Canli Demo
+- `Maven 3.9+`
 
-> Core Diagnostics Terminal — gercek zamanli ekipman olay akisi, oruntu analizi ve anomali yogunlugu takibi.
+Not:
 
-![FaultStream Dashboard](docs/screenshots/dashboard-ekrani.png)
+- Repo icinde `mvnw` ve `mvnw.cmd` var. Maven kurulu degilse once wrapper ile deneyin.
+- PostgreSQL container'i host tarafinda `5433` portuna aciliyor. `5432` degil.
 
-NOC tasarimindan ilham alan karanlik arayuz, tek bakista operasyonel farkindalik saglar:
+## Hizli Baslangic
 
-| Alan | Aciklama |
-|---|---|
-| **ACTIVE_NODES** | Akisa bagli aktif ekipman sayisi |
-| **SYS_INTEGRITY** | Tum izlenen varliklardaki toplam saglik skoru |
-| **RECORDED_ANOMALIES** | Aktif izleme penceresindeki toplam ariza olayi |
-| **STATUS** | Sistem geneli tehdit seviyesi — NOMINAL / AWARE / CRITICAL |
-| **STREAM // EQUIPMENT.EVENTS** | Kafka kaynakli canli ariza olay akisi, onem siniflandirmasi ile |
-| **PATTERN_ANALYSIS** | Ariza turu dagilimi — THERMAL, SYS_DESYNC, PWR_DROP, NET_LOSS |
-| **FREQ_DENSITY [7D]** | 7 gunluk anomali frekansi histogrami |
+Asagidaki adimlar, projeyi ilk kez kuran biri icin en kisa yol:
 
----
-
-## Sistem Ortami
-
-> Gelistirme ve hazirlama ortami — Ubuntu 24.04, Intel i5-11300H, 15.3 GiB RAM, 467G NVMe depolama.
-
-![Sistem Izleyici](docs/screenshots/btop-ekrani.png)
-
-Platform, tam stack'i (PostgreSQL + Kafka + Zookeeper + Redis + Spring Boot + Next.js) tek bir gelistirici is istasyonunda calistiracak sekilde optimize edilmistir. Uretim ortami dagitimi, servis basina ayri pod'larla Kubernetes uzerinde hedeflenmektedir.
-
----
-
-## Mimari
-
-```
-+---------------------------------------------------------------------------+
-|                         FAULTSTREAM PLATFORM                              |
-|                                                                           |
-|  +---------------+    +--------------------------------------------+     |
-|  |  Next.js 14   |    |             Spring Boot 3.x                |     |
-|  |   Dashboard   |<---|                                            |     |
-|  |   (SSE/REST)  |    |  +----------+  +----------+  +----------+  |     |
-|  +---------------+    |  |   Auth   |  |  Sensor  |  |  Alert   |  |     |
-|                       |  |  Domain  |  |  Domain  |  |  Domain  |  |     |
-|                       |  +----------+  +----+-----+  +----+-----+  |     |
-|                       |                    |              |         |     |
-|                       |         +----------+--------------+------+  |     |
-|                       |         |        Apache Kafka 3.x         |  |     |
-|                       |         |      konu: sensor-readings      |  |     |
-|                       |         +------------------+--------------+  |     |
-|                       |                            |                |     |
-|                       |         +------------------v------------+   |     |
-|                       |         |       SensorDataConsumer      |   |     |
-|                       |         |    + EsikDegerlendirici       |   |     |
-|                       |         |    + AlarmMotoru              |   |     |
-|                       |         +------------------+------------+   |     |
-|                       +--------------------------------------------+     |
-|                                                   |                       |
-|  +-----------+    +---------------+    +----------v----------------+      |
-|  |   Redis   |    |  PostgreSQL   |    |  Is Emri Otomatik Atama  |      |
-|  |  Onbellek |    |   + Flyway    |    +---------------------------+      |
-|  +-----------+    +---------------+                                       |
-+---------------------------------------------------------------------------+
-```
-
-### Veri Akisi
-
-```
-Sensor Donanimi / Simulatoru
-          |
-          v  (Kafka Producer)
-   [sensor-readings topic]
-          |
-          v  (Kafka Consumer)
-   EsikDegerlendirici
-          |
-     +----+----+
-     |         |
-  UYARI    KRITIK
-     |         |
-   Alarm    Alarm + Is Emri
-  Olustur  Teknisyene Otomatik Ata
-     |         |
-     +----+----+
-          |
-          v
-   Redis Onbellegi  (anlik okuma)
-          |
-          v
-   Dashboard API (SSE)
-          |
-          v
-   Next.js Arayuz
-```
-
----
-
-## Teknoloji Yigini
-
-| Katman | Teknoloji | Amac |
-|---|---|---|
-| **Backend** | Spring Boot 3.x / Java 21 | REST API, domain servisleri, Kafka producer/consumer |
-| **Guvenlik** | Spring Security + JWT | Rol tabanli erisim kontrolu (ADMIN / MUHENDIS / TEKNISYEN) |
-| **Mesajlasma** | Apache Kafka 3.x | Yuksek hacimli sensor verisi akisi |
-| **Veritabani** | PostgreSQL 16 | Tum domain entity'lerinin kalici depolanmasi |
-| **Goc (Migration)** | Flyway | Versiyon kontrollu sema evrimi |
-| **Onbellek** | Redis 7.x | Alarm durumu, dashboard agregasyonlari (%80 DB yuku azalmasi) |
-| **Frontend** | Next.js 14 (App Router) | Gercek zamanli operasyon paneli |
-| **Grafikler** | Recharts | Zaman serisi ve dagilim gorsellestirmeleri |
-| **Ikonlar** | Lucide React | Arayuz ikonografisi |
-| **Test** | Mockito / MockMvc / Testcontainers | Birim ve uctan uca entegrasyon testleri |
-| **Altyapi** | Docker Compose | Tam yerel stack orkestrasyonu |
-| **Gozlemlenebilirlik** | *(v6.0)* Prometheus + Grafana | Metrik izleme ve gorsellestirme |
-| **Yapay Zeka** | *(v6.0)* Spring AI + OpenAI API | Tahminsel ariza tehsisi |
-
----
-
-## Domain Modeli
-
-```
-Kullanici (User)
- +-- Rol: ADMIN / MUHENDIS / TEKNISYEN
- +-- JWT ile kimlik dogrulama
-
-Ekipman (Equipment)
- +-- ad, tip, konum, durum
- +-- coka ---> Sensorler
-
-Sensor (Sensor)
- +-- ad, tip (SICAKLIK / TITRESIM / NEM / BASINC)
- +-- birim, konum
- +-- uretir ---> SensorOkumalari  (Kafka uzerinden)
-
-SensorOkumasi (SensorReading)
- +-- deger, zaman damgasi, durum
- +-- degerlendirilir ---> EsikDegerlendirici
-
-Alarm (Alert)
- +-- seviye: UYARI / KRITIK
- +-- tetiklenme zamani, cozum zamani
- +-- olusturabilir ---> Is Emri  (KRITIK'te otomatik)
-
-Is Emri (WorkOrder)
- +-- atanan teknisyen, durum, bitis tarihi
- +-- tamamlaninca ---> Bakim Kaydi  (v5.0+)
-
-Bakim Kaydi (MaintenanceLog)  --  v5.0+
- +-- islem, sure, parcalar, maliyet
- +-- besler ---> Yapay Zeka Tehsis Servisi  (v6.0+)
-```
-
----
-
-## Baslangic
-
-### Gereksinimler
-
-- Java 21+
-- Node.js 20+
-- Docker & Docker Compose
-- Maven 3.9+
-
-### Klonla & Calistir
+### 1. Repoyu klonla
 
 ```bash
-# Depoyu klonla
 git clone https://github.com/kullanici-adin/faultstream.git
 cd faultstream
+```
 
-# Altyapi servislerini basalt
+### 2. Altyapi servislerini kaldir
+
+```bash
 docker compose up -d
-
-# Tum servislerin saglikli oldugunu dogrula
 docker compose ps
 ```
 
-Beklenen servisler: `postgres`, `kafka`, `zookeeper`, `redis` — hepsi `healthy` durumunda olmali.
+Saglikli durumda olmasi beklenen servisler:
 
-### Backend
+- `postgres`
+- `zookeeper`
+- `kafka`
+- `redis`
+
+### 3. Backend'i baslat
+
+Windows PowerShell:
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+macOS / Linux:
 
 ```bash
-cd faultstream-backend
-./mvnw clean install
 ./mvnw spring-boot:run
 ```
 
-API taban URL: `http://localhost:8080/api/v1`
+Eger wrapper yerine lokal Maven kullanmak istersen:
 
-### Frontend
+```bash
+mvn spring-boot:run
+```
+
+Backend acildiginda temel adres:
+
+- `http://localhost:8080`
+
+Swagger:
+
+- `http://localhost:8080/swagger-ui.html`
+
+Dashboard API:
+
+- `http://localhost:8080/api/v1/dashboard/terminal`
+
+### 4. Frontend'i baslat
+
+Yeni bir terminal ac:
 
 ```bash
 cd faultstream-dashboard
 npm install
+```
+
+Windows PowerShell / macOS / Linux:
+
+```bash
 npm run dev
 ```
 
-Dashboard URL: `http://localhost:3000`
+Frontend adresi:
 
----
+- `http://localhost:3000`
 
-## API Referansi
+## Beklenen Davranis
 
-### Kimlik Dogrulama
+Her sey dogru calisiyorsa:
 
-```http
-POST /api/v1/auth/register
-POST /api/v1/auth/login
-```
+- backend acilisinda demo equipment ve sensor verisi olusur
+- backend acilisinda demo admin / engineer / technician kullanicilari olusur
+- simulator periyodik sensor reading uretir
+- Kafka ayaktaysa reading once Kafka'ya gider
+- Kafka yoksa backend direct persistence fallback ile calismaya devam eder
+- kritik reading'ler alert ve work-order uretebilir
+- dashboard birkaç saniye icinde veri gostermeye baslar
 
-Sonraki tum isteklerde `Authorization: Bearer <token>` basligi zorunludur.
+## Kurulum Detayi
 
-### Ekipman
+### Backend konfigurasyonu
 
-```http
-GET    /api/v1/equipment
-POST   /api/v1/equipment
-GET    /api/v1/equipment/{id}
-PUT    /api/v1/equipment/{id}
-DELETE /api/v1/equipment/{id}
-```
+Backend konfigurasyonu ana olarak `src/main/resources/application.yml` dosyasinda bulunur.
 
-### Sensorler *(v3.0+)*
+Onemli varsayilanlar:
 
-```http
-GET  /api/v1/sensors
-GET  /api/v1/sensors/{id}
-GET  /api/v1/sensors/{id}/readings?last=100
-GET  /api/v1/sensors/{id}/readings?from=2025-01-01&to=2025-01-31
-```
-
-### Alarmlar *(v4.0+)*
-
-```http
-GET  /api/v1/alerts
-GET  /api/v1/alerts/active
-GET  /api/v1/alerts/{id}
-POST /api/v1/alerts/{id}/resolve
-POST /api/v1/alerts/{id}/snooze?minutes=30
-```
-
-### Is Emirleri *(v4.0+)*
-
-```http
-GET  /api/v1/work-orders
-GET  /api/v1/work-orders/{id}
-PUT  /api/v1/work-orders/{id}/assign
-PUT  /api/v1/work-orders/{id}/complete
-```
-
-### Dashboard *(v5.0+)*
-
-```http
-GET  /api/v1/dashboard/summary
-GET  /api/v1/dashboard/sensor-stream     <-- SSE endpoint (canli akis)
-GET  /api/v1/dashboard/alerts/recent
-GET  /api/v1/dashboard/equipment/health
-```
-
-### Yapay Zeka Tehsisi *(v6.0+)*
-
-```http
-GET  /api/v1/ai/diagnosis/{equipmentId}
-GET  /api/v1/ai/summary/daily
-```
-
----
+- PostgreSQL adresi: `jdbc:postgresql://localhost:5433/faultstream`
+- Kafka adresi: `localhost:9092`
+- Redis adresi: `localhost:6379`
+- JWT secret: env yoksa default deger kullanilir
+- simulator: varsayilan olarak acik
 
 ## Ortam Degiskenleri
 
-Proje kok dizininde `.env` dosyasi olusturun:
+En cok kullanilan degiskenler:
+
+Backend:
 
 ```env
-# Veritabani
-POSTGRES_DB=faultstream
-POSTGRES_USER=faultstream_user
-POSTGRES_PASSWORD=guvenli_sifreniz
-
-# Kafka
+DATABASE_URL=jdbc:postgresql://localhost:5433/faultstream
+DATABASE_USER=faultstream_user
+DATABASE_PASSWORD=faultstream_pass
 KAFKA_BOOTSTRAP_SERVERS=localhost:9092
-KAFKA_TOPIC_SENSOR_READINGS=sensor-readings
-
-# Redis
 REDIS_HOST=localhost
 REDIS_PORT=6379
-
-# JWT
-JWT_SECRET=256_bit_gizli_anahtariniz
-JWT_EXPIRATION_MS=86400000
-
-# Sensor Simulatoru
+JWT_SECRET=uzun-ve-guvenli-bir-secret
 SIMULATOR_ENABLED=true
-SIMULATOR_INTERVAL_MS=4000
-
-# OpenAI (v6.0+)
-OPENAI_API_KEY=sk-...
+SIMULATOR_INTERVAL_MS=5000
+KAFKA_TOPIC_SENSOR_READINGS=sensor-readings
 ```
 
----
+Frontend:
 
-## Docker Compose Servisleri
+```env
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8080/api/v1
+```
+
+Demo kullanicilar:
+
+```text
+admin@faultstream.local
+engineer@faultstream.local
+technician@faultstream.local
+password: Faultstream123!
+```
+
+Not:
+
+- `docker-compose.yml` icindeki PostgreSQL container'i `DB_USER` ve `DB_PASSWORD` kullanir.
+- Spring Boot tarafi ise `DATABASE_USER` ve `DATABASE_PASSWORD` bekler.
+- Lokal gelistirmede varsayilan degerler zaten birbirleriyle uyumlu oldugu icin ekstra ayar yapmadan baslayabilirsin.
+
+## Servis Portlari
+
+| Servis | Port |
+|---|---|
+| Spring Boot API | `8080` |
+| Next.js Dashboard | `3000` |
+| PostgreSQL | `5433` |
+| Kafka | `9092` |
+| Zookeeper | `2181` |
+| Redis | `6379` |
+
+## Ilk Kontroller
+
+Projeyi ayaga kaldirdiktan sonra sirasiyla su kontrolleri yap:
+
+### 1. Swagger aciliyor mu
+
+Tarayicida:
+
+- `http://localhost:8080/swagger-ui.html`
+
+### 2. Dashboard API veri donuyor mu
+
+Tarayicida veya terminalde:
 
 ```bash
-# Tumunu basalt
-docker compose up -d
-
-# Tumunu durdur
-docker compose down -v
-
-# Sadece altyapi (DB + Kafka + Redis)
-docker compose up -d postgres kafka zookeeper redis
+curl http://localhost:8080/api/v1/dashboard/terminal
 ```
 
-| Servis | Port | Aciklama |
-|---|---|---|
-| postgres | 5432 | PostgreSQL 16 |
-| kafka | 9092 | Apache Kafka 3.x |
-| zookeeper | 2181 | Kafka bagimliligi |
-| redis | 6379 | Redis 7.x |
+Beklenen sey:
 
----
+- `success: true`
+- `stats`
+- `stream`
+- `patternAnalysis`
+- `frequencyDensity`
+
+### 3. Frontend veri cekiyor mu
+
+Tarayicida:
+
+- `http://localhost:3000`
+
+Beklenen sey:
+
+- `SENSOR_LINK: LIVE` ya da gecici olarak `DEGRADED`
+- stream tablosunda event'ler
+- sag tarafta pie/bar chart verileri
+
+## Temel API Uclari
+
+### Public uclar
+
+- `POST /api/v1/auth/register`
+- `POST /api/v1/auth/login`
+- `GET /api/v1/dashboard/terminal`
+
+### Equipment
+
+- `GET /api/v1/equipments`
+- `POST /api/v1/equipments`
+- `GET /api/v1/equipments/{id}`
+- `DELETE /api/v1/equipments/{id}`
+
+### Sensor
+
+- `GET /api/v1/sensors`
+- `POST /api/v1/sensors`
+- `GET /api/v1/sensors/{id}`
+- `GET /api/v1/sensors/{id}/readings?last=100`
+
+### Alerts
+
+- `GET /api/v1/alerts`
+- `GET /api/v1/alerts/active`
+- `GET /api/v1/alerts/{id}`
+- `POST /api/v1/alerts/{id}/resolve`
+
+### Work Orders
+
+- `GET /api/v1/work-orders`
+- `GET /api/v1/work-orders/{id}`
+- `PUT /api/v1/work-orders/{id}/assign`
+- `PUT /api/v1/work-orders/{id}/complete`
+
+### Maintenance Logs
+
+- `GET /api/v1/maintenance-logs`
+- `GET /api/v1/maintenance-logs/work-order/{workOrderId}`
+- `POST /api/v1/maintenance-logs`
 
 ## Proje Yapisi
 
-```
-faultstream/
-+-- faultstream-backend/
-|   +-- src/main/java/com/faultstream/
-|   |   +-- auth/              # JWT, Spring Security, Kullanici domain
-|   |   +-- equipment/         # Ekipman entity, servis, controller
-|   |   +-- sensor/            # Sensor domain (v3.0+)
-|   |   |   +-- entity/
-|   |   |   +-- kafka/         # Producer & Consumer
-|   |   |   +-- scheduler/     # SensorSimulatorScheduler
-|   |   |   +-- service/
-|   |   +-- alert/             # Alarm + EsikDegerlendirici (v4.0+)
-|   |   +-- workorder/         # Is emri otomatik atama (v4.0+)
-|   |   +-- maintenance/       # Bakim Kaydi (v5.0+)
-|   |   +-- dashboard/         # DashboardController + SSE (v5.0+)
-|   |   +-- ai/                # Spring AI Tehsis Servisi (v6.0+)
-|   |   +-- common/            # Paylasilan yardimcilar, istisnalar
-|   +-- src/main/resources/
-|   |   +-- db/migration/      # Flyway SQL scriptleri (V1-V7)
-|   |   +-- application.yml
-|   +-- src/test/              # Mockito + Testcontainers
-|
-+-- faultstream-dashboard/     # Next.js 14 App Router
-|   +-- app/
-|   |   +-- dashboard/         # Ana dashboard sayfasi
-|   |   +-- equipment/         # Ekipman listesi ve detay
-|   |   +-- alerts/            # Alarm yonetimi (v4.0+)
-|   |   +-- maintenance/       # Bakim kaydi gorunumu (v5.0+)
-|   +-- components/
-|   |   +-- ui/                # Yeniden kullanilabilir UI bilesenleri
-|   |   +-- charts/            # Recharts sarmalayicilari
-|   |   +-- stream/            # SSE hook'lari ve canli veri (v5.0+)
-|   +-- lib/
-|       +-- api/               # Tipli API istemcisi
-|
-+-- docker-compose.yml
-+-- docs/
-|   +-- screenshots/
-+-- README.md
-```
+Bu repo iki ana bolumden olusur:
 
----
+### Backend
 
-## Surum Yol Haritasi
+- `src/main/java/com/faultstream/common`
+- `src/main/java/com/faultstream/config`
+- `src/main/java/com/faultstream/domain/user`
+- `src/main/java/com/faultstream/domain/equipment`
+- `src/main/java/com/faultstream/domain/sensor`
+- `src/main/java/com/faultstream/domain/dashboard`
+- `src/main/resources/db/migration`
 
-| Surum | Kilometre Tasi | Durum |
-|---|---|---|
-| **v1.0.0** | Docker altyapisi · Spring Security + JWT · Kullanici & Ekipman domain | ✅ Tamamlandi |
-| **v2.0.0** | Temiz kod gecisi · Next.js App Router · NOC karanlik dashboard · Mock gercek zamanli grafikler | ✅ Tamamlandi |
-| **v3.0.0** | Sensor domain · Flyway V3/V4 · Kafka producer/consumer · SensorSimulatorScheduler | Devam Ediyor |
-| **v4.0.0** | Alarm & Is Emri domain · Esik degerlendirme · Otomatik atama · Redis onbellek | Planlandi |
-| **v5.0.0** | Bakim Kaydi · DashboardController · SSE canli entegrasyon · Testcontainers | Planlandi |
-| **v6.0.0** | Spring Actuator · Prometheus · Grafana · Spring AI tahminsel tehsis | Planlandi |
-| **v7.0.0** | OT Edge Entegrasyonu · Üretici Bağımsızlığı · Kestirimci Bakım & Kalıp Sicili | Kavramsal Aşama |
+### Frontend
 
-### Gelecek Fazlar Detaylı Hedefleri
+- `faultstream-dashboard/src/app`
 
-Aşağıdaki liste `ROADMAP.md` belgesindeki geleceğe dönük kritik aşamaları özetler:
+## Sik Karsilasilan Sorunlar
 
-#### v3.0.0 — Sensor Data & Event Streaming
-- `Sensor` ve `SensorReading` Domain altyapısının kurulması.
-- `SensorSimulatorScheduler` ile Kafka'ya rastgele verilerin aktarılması.
-- `SensorDataConsumer` ile akan verilerin ayrıştırılması.
+### 1. Backend acilmiyor, Flyway veya DB hatasi veriyor
 
-#### v4.0.0 — Autonomous Alerting & Work Orders
-- Sensör akışında anomali tespit edildiğinde otonom `Alert` üretimi.
-- Kritik alarmlarda insan müdahalesi olmadan `WorkOrder` (İş Emri) atanması.
-- Performans için aktif alarmların `Redis` ile önbelleklenmesi.
+Kontrol et:
 
-#### v5.0.0 — Maintenance Tracking & Full API Integration
-- `MaintenanceLog` ile her iş emrinin log tarihçesinin tutulması.
-- Next.js Dashboard'una Mock veri yerine `DashboardController` ile gerçek Canlı Akış entegrasyonu.
-- H2 veritabanı testlerinin iptal edilip, `Testcontainers` (Gerçek PostgreSQL container'ı) üzerinden e2e (uçtan uca) test yapısının inşa edilmesi.
+- Docker acik mi
+- `docker compose ps` icinde `postgres` ayakta mi
+- `5433` portu baska bir sey tarafindan kullaniliyor mu
 
-#### v6.0.0 — Observability & Artificial Intelligence
-- Spring Boot Actuator, Micrometer ve Prometheus izleme araçlarının kurulması.
-- `Grafana` ile JVM kullanımı, Kafka verimi ve CPU izlemesi için görselleştirme.
-- OpenAI altyapısına bağlanarak bakım loglarını analiz ettirip, yapay zekanın "Olası Arıza Tahmini" sunacağı bir `DiagnosisService` (Akıllı Teşhis) yazılması.
+### 2. Dashboard bos geliyor
 
-#### v7.0.0 — OT Edge Integration & Predictive Tooling
-- **Üretici Bağımsız IoT Ağı:** Schuler, AIDA veya eski preslerin tek bir ekranda birleştirilmesi için Siemens IoT2050 (Edge Gateway) donanımları ile fiziksel saha (OT) MQTT/OPC UA haberleşmesi entegrasyonu.
-- **Akıllı İş Akışları (Fault Stream Yönlendirmesi):** Yalnızca alarm üretmek yerine, teknisyen mobil uygulamasına gerçek zamanlı Push bildirim (NFC onaylı görev tamamlama) ve MTTR (Ortalama Çözüm Süresi) ölçümleri eklenmesi.
-- **Kestirimci Trend Analizi:** Sensör akışlarının (örn: sağ kolon tonajındaki yavaş ancak trend şeklindeki artış) analiz edilip donanım/kalıp kırılmadan önce "Condition-Based Monitoring" (Durum Bazlı Bakım) makine öğrenimi modellerinin uygulanması.
-- **Kalıp ve Ekipman Dijital Sicili (Digital Twin):** Ekipmana bağlanan takımların (Kalıp ID) kaydedilerek, her kalıbın farklı makinelerde geçirdiği ömür ve yarattığı arıza skorlarının ölçümlenip analiz edilmesi.
+Kontrol et:
 
----
+- backend loglarinda uygulama tam acildi mi
+- `SIMULATOR_ENABLED=true` mi
+- `http://localhost:8080/api/v1/dashboard/terminal` veri donuyor mu
 
-## Otonom Alarm Mantigi (v4.0+)
+### 3. Frontend backend'e baglanamiyor
 
-```
-Kafka uzerinden SensorOkumasi gelir
-              |
-              v
-      EsikDegerlendirici
-  +-------------------------------------------------------+
-  |  deger > kural.kritikEsik?  --> EVET                  |
-  |      --> KRITIK Alarm olustur                         |
-  |      --> Is Emri otomatik ata                         |
-  |                                                       |
-  |  deger > kural.uyariEsik?   --> EVET                  |
-  |      --> UYARI Alarm olustur                          |
-  |      --> Muhendis incelemesi beklenir                 |
-  |                                                       |
-  |  deger normal --> Sensor saglik durumunu guncelle     |
-  +-------------------------------------------------------+
-              |
-              v  (KRITIK ise)
-  IsEmriServisi.otomatikAta()
-  +-- Vardiyada olan teknisyeni bul
-  +-- Is emrini ata
-  +-- SMS / E-posta bildirimi gonder  (v4.x)
-  +-- SLA geri sayimini basalt
-```
+Kontrol et:
 
-Esik kurallari veritabaninda sensor basina saklanir ve calisma zamaninda degistirilebilir — yeniden dagitim gerekmez.
+- frontend `3000` portunda mi
+- backend `8080` portunda mi
+- `NEXT_PUBLIC_API_BASE_URL` dogru mu
+- CORS nedeniyle proxy veya farkli host kullaniyor musun
 
----
+### 4. Kafka ayakta degil
 
-## Performans Hedefleri
+Projede fallback davranisi var. Kafka calismazsa simulator veriyi dogrudan yazmayi dener. Yine de tavsiye edilen kurulum tum Docker servislerini ayaga kaldirmaktir.
 
-| Metrik | Hedef | Mekanizma |
-|---|---|---|
-| Sensor alinan hacmi | 10.000+ okuma/dakika | Kafka bolümleme |
-| Alarm uretme gecikmesi | < 500ms (okumadan itibaren) | Consumer + Redis yazma |
-| Dashboard API p95 gecikmesi | < 50ms | Redis onbellek isabeti |
-| Veritabani yuku azalmasi | ~%80 | Sicak yollar icin Redis |
-| Kafka consumer gecikmesi | < 5 saniye | Bolum yeniden dengeleme |
+### 5. Java surumu uyusmuyor
 
----
+Bu proje `Java 21` hedefler. `java -version` ciktiinda `21` gormelisin.
 
-## Test Stratejisi
+## Yararlı Komutlar
+
+Tum servislere yeniden baslamak icin:
 
 ```bash
-# Birim testleri (Mockito + MockMvc)
+docker compose down
+docker compose up -d
+```
+
+Docker volume'lerini de sifirlamak icin:
+
+```bash
+docker compose down -v
+docker compose up -d
+```
+
+Backend testleri:
+
+Windows PowerShell:
+
+```powershell
+.\mvnw.cmd test
+```
+
+macOS / Linux:
+
+```bash
 ./mvnw test
-
-# Docker container'lariyla entegrasyon testleri (v5.0+)
-./mvnw verify -P integration-tests
-
-# Belirli bir domain testi
-./mvnw test -Dtest=EquipmentServiceTest
 ```
 
-Test piramidi:
-
-- **Birim testleri** — Mockito mock'lariyla servis katmani
-- **Controller testleri** — REST endpoint'leri icin MockMvc dilim testleri
-- **Entegrasyon testleri** — Gercek PostgreSQL + Kafka ile Testcontainers
-
----
-
-## Guvenlik
-
-- Yapilandirilabilir sona erme sureli JWT token'lar
-- Rol tabanli erisim kontrolu: `ADMIN` > `MUHENDIS` > `TEKNISYEN`
-- Endpoint duzeyinde `@PreAuthorize` anotasyonlari
-- BCrypt ile sifrelenmiş parolalar (guc: 12)
-- JPA parametreli sorgu ile SQL enjeksiyonu koruması
-- CORS yalnizca dashboard kaynagi icin yapilandirilmis
-
----
-
-## Saha Donanımı (OT) ve Sensör Mimarisi
-
-FaultStream yalnızca bir yazılım platformu değil, aynı zamanda fiziksel dünyadan (özellikle eksantrik/mekanik presler gibi ağır sanayi makinelerinden) veri toplayan uçtan uca bir Endüstri 4.0 çözümüdür. Geliştirme ortamında simüle edilen veriler, gerçek üretim sahasında aşağıdaki donanım mimarisiyle toplanır:
-
-### 1. Sensör Türleri ve Konumları (Mekanik Pres Örneği)
-
-Makinelere sonradan eklenecek (Retrofit) endüstri standartlarındaki sensör grupları şunlardır:
-
-*   **Strain Gauge (Gerinim Ölçer / Tonaj Sensörü):**
-    *   **Ne Çeker:** Presin uyguladığı ezme/vurma kuvvetini (Tonaj) ölçer.
-    *   **Nereye Takılır:** Presin ana kolonları (sütunları) veya biyel kolları üzerine yüzeye kaynaklanarak veya özel vidalarla sabitlenir. Genellikle dengesiz yükleri tespit edebilmek için 4 kolona da 1'er adet takılır.
-    *   **Görevi:** Kalıp içerisinde çift parça binmesi, sıkışma veya malzemenin yanlış beslenmesi durumunda oluşan "Aşırı Tonaj" hatalarını yakalar. Pano içindeki Sinyal Yükseltici (Amplifier) yardımıyla milivolt (mV) seviyesindeki gerinmeyi PLC için 0-10V / 4-20mA aralığına çevirir.
-*   **Rotary Encoder veya İndüktif Kam Sensörü (Koç Pozisyonu):**
-    *   **Ne Çeker:** Pres koçunun (ram) 0-360 derece arasındaki anlık pozisyonunu bildirir.
-    *   **Nereye Takılır:** Presin dönen eksantrik miline (krank mili göbeğine) bağlanır.
-    *   **Görevi:** Yalnızca tonajı okumak yetmez; maksimum tonajın koç tam saca vururken (180° - Alt ölü nokta) oluştuğunu doğrulamak için tonaj sensörleriyle senkronize çalışır.
-*   **Parça Düşme Sensörü (Part Ejection Sensor):**
-    *   **Ne Çeker:** Basılan parçanın kalıbı terk edip etmediğini kontrol eder.
-    *   **Nereye Takılır:** Kalıp çıkışına veya tahliye bandının üzerine takılır (Lazer veya Fiber optik).
-    *   **Görevi:** Parça düşüp gitmez ve içerde kalırsa sistemi kilitler. Kalıp kırılmalarının bir numaralı engelleme sistemidir.
-
-### 2. Elektrik Panosu Bağlantıları ve Veri Güvenliği
-
-Bu sensörlerden gelen kablolar ofis alanlarına kadar çekilmez. Ağır sarsıntı, metal tozu ve elektromanyetik paraziti engellemek için tüm sistem **makinenin ana elektrik kontrol panosunda (veya bitişiğindeki IP65 yalıtımlı zırhlı IoT panosunda)** toplanır.
-
-1.  **Güç İhtiyacı:** Kenar (Edge) cihazlarımız ev veya ofis bilgisayarı gibi değil, 24V DC ile çalışır ve gücü panodan çekeriz.
-2.  **Analog Veri Kalitesi (Parazit Filtreleme):** Sensörlerden gelen analog sinyaller uzun kablolarda motor sürücülerinin (inverter) manyetik alanına çarpıp bozulmaması için (Noise), kablolar çok kısa tutulup panodaki giriş seviyesi PLC'ye veya Tonaj Monitör Modülüne aktarılır.
-
-### 3. Buluta Veri Gönderme (Edge Computing Yöntemi)
-
-Saha ile FaultStream backend'i arasında siber güvenliği sağlamak ve gereksiz veri yükünü önlemek için doğrudan bağlantı yapılmaz.
-
-*   **Ağ Geçidi (Edge Gateway):** Pano içerisine ray tipi endüstriyel bir cihaz (Örn: Siemens IoT2050 veya Raspberry Pi IPC) takılır. Bu cihaz, 1. Ethernet portuyla doğrudan PLC'ye bağlanarak veriyi çeker, 2. Portuyla fabrikanın internetine bağlanarak dış dünyayla konuşur.
-*   **Veri Filtreleme:** Saniyede 10.000 veri gönderip bandı yormak yerine sensörden "Sadece En Yüksek (Peak) Tonajı gönder" veya "Sadece HATA olduğunda gönder" diyerek veriyi işler.
-*   **Offline Veri Koruma:** Fabrikada internet koptuğunda, Gateway cihazı sensörden okuduğu hata geçmişini üzerinde bulunan ufak lokal veritabanına ya da RAM üzerinde (Örn: SQLite / Redis) biriktirir (Buffer). Ağ bağlantısı tekrar kurulduğu saniye FaultStream sunucularına tüm paketi iletir.
-
-### 4. Saha Donanımı Maliyet Analizi (BOM - Bill of Materials)
-
-Bir makineyi (Örn: 1990 model eski tip bir mekanik pres) Endüstri 4.0 uyumlu hale getirip FaultStream'e bağlamanın donanım bazındaki **gerçek piyasa maliyetleri (Güncel Türkiye Fiyatlandırması - TL cinsi):**
-
-> **Not:** Eğer makinede halihazırda yeni nesil bir PLC (Siemens S7-1200/1500, Beckhoff vb.) varsa, A, B ve D kalemlerine gerek kalmaz. Sadece Ağ Geçidi (C) eklenir veya doğrudan OPC UA ile **sıfır donanım maliyeti** ile veri çekilebilir.
-
-| Kategori | Endüstriyel Donanım (Örnek Marka/Model) | Tahmini Birim Maliyeti (TL) |
-| :--- | :--- | :--- |
-| **A. Sensör Kümesi** | 4'lü Strain Gauge (Wintriss/Kistler/Toledo muadilleri), 1x SICK/Pepperl+Fuchs Encoder | 25.000 ₺ - 35.000 ₺ |
-| **B. PLC (Beyin)** | Siemens S7-1200 Serisi (CPU 1214C) + 4 Kanallı Analog Modül (SM 1231) | 20.000 ₺ - 25.000 ₺ |
-| **C. Ağ Geçidi (Edge)**| Siemens SIMATIC IOT2050 (veya RevPi Core) - Lokal veri tamponu ve bulut köprüsü | 13.000 ₺ - 16.000 ₺ |
-| **D. Pano & Altyapı**  | IP65 Endüstriyel Elektronik Pano, 24V Din Rail Güç Kaynağı, Switch, Montaj Kabloları | 8.000 ₺ - 12.000 ₺ |
-| **TOPLAM YATIRIM** | **1 Eski Tip Makinenin Uçtan Uca Tam Dijitalleşme Maliyeti** | **~66.000 ₺ - 88.000 ₺** |
-
-**Yatırımın Geri Dönüşü (ROI):** Ortalama 75.000 TL değerindeki bu tam paket donanım yatırımı; kalıp kırılması sonucu yaşanacak tek bir **300.000 TL'lik hasarı ve 3 günlük planlı/plansız duruşu (üretim kaybını)** engellediği ilk saniyede kendisini en az 3-4 kez amorte etmektedir.
-
----
-
-## Katkida Bulunma
+Frontend lint:
 
 ```bash
-# Fork'la ve klonla
-git clone https://github.com/kullanici-adin/faultstream.git
-
-# Ozellik dali olustur
-git checkout -b feature/sensor-mqtt-adapter
-
-# Conventional Commits formatiyla commit yap
-git commit -m "feat(sensor): MQTT protokol adaptoru eklendi"
-
-# Push et ve PR ac
-git push origin feature/sensor-mqtt-adapter
+cd faultstream-dashboard
+npm run lint
 ```
 
-Dal adlandirma kurallari: `feature/`, `fix/`, `chore/`, `docs/`
+## Gelistirme Notu
 
-Commit formati: [Conventional Commits](https://www.conventionalcommits.org/)
+Eger amacin sadece projeyi gormekse:
 
----
+1. Docker servislerini kaldir
+2. Backend'i baslat
+3. Frontend'i baslat
+4. Dashboard'a gir
+
+Eger amacin gelistirme yapmaksa:
+
+1. `README` sonrasi `ROADMAP.md` dosyasini oku
+2. `src/main/java/com/faultstream/domain` altindan ilgili domain'i ac
+3. `faultstream-dashboard/src/app/page.tsx` ile dashboard akisina bak
 
 ## Lisans
 
-Bu proje **MIT Lisansi** ile lisanslanmistir — ayrintilar icin [LICENSE](LICENSE) dosyasina bakin.
-
----
-
-<div align="center">
-
-**FaultStream** — Java, Kafka ve makinelerin kendi arizalarini raporlamasi gerektigi inanciyla insa edildi.
-
-*Core Diagnostics Terminal · Endustriyel IoT · Olay Odakli Mimari*
-
-</div>
+Bu proje `MIT` lisansi altindadir.

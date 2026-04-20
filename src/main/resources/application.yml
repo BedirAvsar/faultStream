@@ -20,6 +20,10 @@ spring:
         locations: classpath:db/migration
     kafka:
         bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+        listener:
+            missing-topics-fatal: false
+        admin:
+            fail-fast: false
         consumer:
             group-id: faultstream-group
             auto-offset-reset: earliest
@@ -30,6 +34,10 @@ spring:
         producer:
             key-serializer: org.apache.kafka.common.serialization.StringSerializer
             value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+            properties:
+                "[max.block.ms]": 1000
+                "[request.timeout.ms]": 1000
+                "[delivery.timeout.ms]": 2000
     data:
         redis:
             host: ${REDIS_HOST:localhost}
@@ -44,3 +52,6 @@ jwt:
 simulator:
     enabled: ${SIMULATOR_ENABLED:true}
     interval-ms: 5000
+faultstream:
+    kafka:
+        sensor-topic: ${KAFKA_TOPIC_SENSOR_READINGS:sensor-readings}
