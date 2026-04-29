@@ -23,7 +23,7 @@ public class Alert {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipment_id")
     private Equipment equipment;
-    @Column(nullable = false)
+    @Column(name = "reading_value", nullable = false)
     private double value;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

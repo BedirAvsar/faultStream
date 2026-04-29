@@ -1,4 +1,5 @@
 package com.faultstream.domain.sensor;
+import com.faultstream.domain.dashboard.DashboardCacheService;
 import com.faultstream.domain.equipment.Equipment;
 import com.faultstream.domain.equipment.EquipmentRepository;
 import com.faultstream.domain.equipment.EquipmentType;
@@ -16,9 +17,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("null")
 class SensorServiceTest {
@@ -28,6 +31,8 @@ class SensorServiceTest {
     private SensorReadingRepository sensorReadingRepository;
     @Mock
     private EquipmentRepository equipmentRepository;
+    @Mock
+    private DashboardCacheService dashboardCacheService;
     @InjectMocks
     private SensorService sensorService;
 
@@ -74,6 +79,7 @@ class SensorServiceTest {
         assertEquals("TRB-01", response.getEquipmentName());
         assertEquals(SensorType.TEMPERATURE, response.getType());
         verify(sensorRepository).save(any(Sensor.class));
+        verify(dashboardCacheService).evictTerminalSnapshot();
     }
 
     @Test
@@ -81,7 +87,7 @@ class SensorServiceTest {
         SensorReading reading = SensorReading.builder()
                 .id(1L)
                 .sensor(sensor)
-                .value(97.5)
+                .value(110.0)
                 .recordedAt(LocalDateTime.now())
                 .build();
 

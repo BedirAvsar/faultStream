@@ -1,5 +1,6 @@
 package com.faultstream.domain.sensor;
 import com.faultstream.common.exception.ResourceNotFoundException;
+import com.faultstream.domain.dashboard.DashboardCacheService;
 import com.faultstream.domain.equipment.Equipment;
 import com.faultstream.domain.equipment.EquipmentRepository;
 import com.faultstream.domain.sensor.dto.CreateSensorRequest;
@@ -17,6 +18,7 @@ public class SensorService {
     private final SensorRepository sensorRepository;
     private final SensorReadingRepository sensorReadingRepository;
     private final EquipmentRepository equipmentRepository;
+    private final DashboardCacheService dashboardCacheService;
 
     @Transactional
     public SensorResponse createSensor(CreateSensorRequest request) {
@@ -32,7 +34,9 @@ public class SensorService {
                 .thresholdMax(request.getThresholdMax())
                 .build();
 
-        return mapSensor(sensorRepository.save(sensor));
+        Sensor savedSensor = sensorRepository.save(sensor);
+        dashboardCacheService.evictTerminalSnapshot();
+        return mapSensor(savedSensor);
     }
 
     @Transactional(readOnly = true)

@@ -16,7 +16,7 @@ public class SensorReading {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "sensor_id", nullable = false)
     private Sensor sensor;
-    @Column(nullable = false)
+    @Column(name = "reading_value", nullable = false)
     private double value;
     @Column(nullable = false)
     private LocalDateTime recordedAt;

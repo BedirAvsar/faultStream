@@ -1,12 +1,13 @@
 package com.faultstream.domain.sensor;
+import com.faultstream.config.DemoDataProperties;
 import com.faultstream.config.SimulatorProperties;
 import com.faultstream.domain.equipment.Equipment;
 import com.faultstream.domain.equipment.EquipmentRepository;
 import com.faultstream.domain.equipment.EquipmentType;
+import com.faultstream.domain.sensor.stream.SensorSimulationService;
 import com.faultstream.domain.user.User;
 import com.faultstream.domain.user.UserRepository;
 import com.faultstream.domain.user.UserRole;
-import com.faultstream.domain.sensor.stream.SensorSimulationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -16,6 +17,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class DemoDataInitializer implements ApplicationRunner {
+    private final DemoDataProperties demoDataProperties;
     private final SimulatorProperties simulatorProperties;
     private final EquipmentRepository equipmentRepository;
     private final SensorRepository sensorRepository;
@@ -25,7 +27,7 @@ public class DemoDataInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        if (!simulatorProperties.isEnabled()) {
+        if (!demoDataProperties.isSeedDataEnabled()) {
             return;
         }
         if (userRepository.count() == 0) {
@@ -34,7 +36,7 @@ public class DemoDataInitializer implements ApplicationRunner {
         if (equipmentRepository.count() == 0) {
             seedEquipmentAndSensors();
         }
-        if (sensorRepository.count() > 0) {
+        if (simulatorProperties.isEnabled() && sensorRepository.count() > 0) {
             sensorSimulationService.seedInitialHistory(4);
         }
     }

@@ -1,5 +1,9 @@
 package com.faultstream.domain.dashboard;
-import com.faultstream.domain.dashboard.dto.*;
+import com.faultstream.domain.dashboard.dto.DashboardEventResponse;
+import com.faultstream.domain.dashboard.dto.DashboardFrequencyResponse;
+import com.faultstream.domain.dashboard.dto.DashboardPatternResponse;
+import com.faultstream.domain.dashboard.dto.DashboardStatsResponse;
+import com.faultstream.domain.dashboard.dto.DashboardTerminalResponse;
 import com.faultstream.domain.equipment.EquipmentRepository;
 import com.faultstream.domain.sensor.Sensor;
 import com.faultstream.domain.sensor.SensorReading;
@@ -7,13 +11,19 @@ import com.faultstream.domain.sensor.SensorReadingRepository;
 import com.faultstream.domain.sensor.SensorService;
 import com.faultstream.domain.sensor.SensorType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class DashboardService {
@@ -22,6 +32,7 @@ public class DashboardService {
     private final SensorReadingRepository sensorReadingRepository;
 
     @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "dashboardTerminal", sync = true)
     public DashboardTerminalResponse getTerminalSnapshot() {
         List<SensorReading> latestReadings = sensorReadingRepository.findAllByOrderByRecordedAtDesc(PageRequest.of(0, 250));
         List<SensorReading> lastTwentyFourHours =

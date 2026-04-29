@@ -85,6 +85,15 @@ export default function Dashboard() {
 
   useEffect(() => {
     let active = true;
+    let timeoutId: number | undefined;
+
+    const scheduleNextLoad = () => {
+      if (!active) {
+        return;
+      }
+      const nextDelay = document.visibilityState === "visible" ? 5000 : 20000;
+      timeoutId = window.setTimeout(loadDashboard, nextDelay);
+    };
 
     const loadDashboard = async () => {
       try {
@@ -116,15 +125,18 @@ export default function Dashboard() {
           setLinkState("DEGRADED");
           setIsLoading(false);
         });
+      } finally {
+        scheduleNextLoad();
       }
     };
 
     loadDashboard();
-    const intervalId = window.setInterval(loadDashboard, 5000);
 
     return () => {
       active = false;
-      window.clearInterval(intervalId);
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
     };
   }, []);
 

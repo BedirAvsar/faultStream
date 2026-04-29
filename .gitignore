@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Local env files ###
+.env
+.env.local
+.env.*.local
+faultstream-dashboard/.env.local

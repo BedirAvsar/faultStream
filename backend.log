@@ -1,0 +1,619 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.faultstream:faultstream >---------------------
+[INFO] Building  0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.12:run (default-cli) > test-compile @ faultstream >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ faultstream ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 10 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ faultstream ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ faultstream ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ faultstream ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< spring-boot:3.5.12:run (default-cli) < test-compile @ faultstream <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.12:run (default-cli) @ faultstream ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.12)
+
+2026-04-20T19:06:06.286+03:00  INFO 9212 --- [faultstream] [           main] com.faultstream.FaultstreamApplication   : Starting FaultstreamApplication using Java 21.0.10 with PID 9212 (D:\bedirabe\faultStream\target\classes started by SAMET in D:\bedirabe\faultStream)
+2026-04-20T19:06:06.286+03:00  INFO 9212 --- [faultstream] [           main] com.faultstream.FaultstreamApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-04-20T19:06:07.095+03:00  INFO 9212 --- [faultstream] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-04-20T19:06:07.097+03:00  INFO 9212 --- [faultstream] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-20T19:06:07.239+03:00  INFO 9212 --- [faultstream] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 135 ms. Found 7 JPA repository interfaces.
+2026-04-20T19:06:07.848+03:00  INFO 9212 --- [faultstream] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-20T19:06:07.859+03:00  INFO 9212 --- [faultstream] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-20T19:06:07.859+03:00  INFO 9212 --- [faultstream] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.52]
+2026-04-20T19:06:07.931+03:00  INFO 9212 --- [faultstream] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-20T19:06:07.931+03:00  INFO 9212 --- [faultstream] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1611 ms
+2026-04-20T19:06:08.134+03:00  INFO 9212 --- [faultstream] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-20T19:06:08.168+03:00  INFO 9212 --- [faultstream] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.44.Final
+2026-04-20T19:06:08.195+03:00  INFO 9212 --- [faultstream] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-20T19:06:08.407+03:00  INFO 9212 --- [faultstream] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-20T19:06:08.432+03:00  INFO 9212 --- [faultstream] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-20T19:06:08.595+03:00  INFO 9212 --- [faultstream] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-04-20T19:06:08.596+03:00  INFO 9212 --- [faultstream] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-20T19:06:08.614+03:00  WARN 9212 --- [faultstream] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-20T19:06:08.630+03:00  INFO 9212 --- [faultstream] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-20T19:06:09.400+03:00  INFO 9212 --- [faultstream] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-20T19:06:09.454+03:00  INFO 9212 --- [faultstream] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-20T19:06:10.022+03:00  INFO 9212 --- [faultstream] [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-04-20T19:06:10.022+03:00  WARN 9212 --- [faultstream] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-04-20T19:06:10.123+03:00  WARN 9212 --- [faultstream] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-20T19:06:10.148+03:00  INFO 9212 --- [faultstream] [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2026-04-20T19:06:11.093+03:00  INFO 9212 --- [faultstream] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-04-20T19:06:11.105+03:00  INFO 9212 --- [faultstream] [           main] com.faultstream.FaultstreamApplication   : Started FaultstreamApplication in 5.198 seconds (process running for 5.537)
+2026-04-20T19:06:12.210+03:00  INFO 9212 --- [faultstream] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-20T19:06:12.210+03:00  INFO 9212 --- [faultstream] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-20T19:06:12.210+03:00  INFO 9212 --- [faultstream] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-04-20T19:06:16.277+03:00  INFO 9212 --- [faultstream] [   scheduling-1] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values: 
+	acks = -1
+	auto.include.jmx.reporter = true
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = faultstream-producer-1
+	compression.gzip.level = -1
+	compression.lz4.level = 9
+	compression.type = none
+	compression.zstd.level = 3
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 2000
+	enable.idempotence = true
+	enable.metrics.push = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 1000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metadata.recovery.strategy = none
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.adaptive.partitioning.enable = true
+	partitioner.availability.timeout.ms = 0
+	partitioner.class = null
+	partitioner.ignore.keys = false
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 1000
+	retries = 2147483647
+	retry.backoff.max.ms = 1000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.header.urlencode = false
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.springframework.kafka.support.serializer.JsonSerializer
+
+2026-04-20T19:06:16.310+03:00  INFO 9212 --- [faultstream] [   scheduling-1] o.a.k.c.t.i.KafkaMetricsCollector        : initializing Kafka metrics collector
+2026-04-20T19:06:16.410+03:00  INFO 9212 --- [faultstream] [   scheduling-1] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=faultstream-producer-1] Instantiated an idempotent producer.
+2026-04-20T19:06:16.443+03:00  INFO 9212 --- [faultstream] [   scheduling-1] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.9.2
+2026-04-20T19:06:16.443+03:00  INFO 9212 --- [faultstream] [   scheduling-1] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 5e9866f43ab8e7e4
+2026-04-20T19:06:16.443+03:00  INFO 9212 --- [faultstream] [   scheduling-1] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1776701176443
+2026-04-20T19:06:16.629+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:16.629+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:16.629+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:16.742+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:16.744+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:16.744+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:16.910+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:16.910+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:16.910+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:17.128+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:17.128+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:17.128+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:17.451+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='33729fb9-bf01-4cf7-9692-8bf3d1d8f87e' and payload='SensorReadingEvent(sensorId=33729fb9-bf01-4cf7-9692-8bf3d1d8f87e, value=64.78, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:17.456+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=33729fb9-bf01-4cf7-9692-8bf3d1d8f87e
+2026-04-20T19:06:17.577+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:17.577+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:17.577+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:18.461+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='58413ed5-029d-4e07-a980-50e9a0689bc3' and payload='SensorReadingEvent(sensorId=58413ed5-029d-4e07-a980-50e9a0689bc3, value=82.05, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:18.461+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=58413ed5-029d-4e07-a980-50e9a0689bc3
+2026-04-20T19:06:18.527+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:18.527+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:18.527+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:19.463+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='10327e81-b719-41a9-8802-3565f014b873' and payload='SensorReadingEvent(sensorId=10327e81-b719-41a9-8802-3565f014b873, value=4.77, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:19.463+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=10327e81-b719-41a9-8802-3565f014b873
+2026-04-20T19:06:19.527+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:19.527+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:19.527+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:20.476+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='9a778e7f-80d0-482a-8161-d4f20d619bd5' and payload='SensorReadingEvent(sensorId=9a778e7f-80d0-482a-8161-d4f20d619bd5, value=18.98, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:20.476+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=9a778e7f-80d0-482a-8161-d4f20d619bd5
+2026-04-20T19:06:20.527+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:20.527+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:20.527+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:21.411+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:21.411+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:21.411+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:21.477+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='50085d19-b211-4a18-b1f3-5659bb4035f1' and payload='SensorReadingEvent(sensorId=50085d19-b211-4a18-b1f3-5659bb4035f1, value=5.24, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:21.477+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=50085d19-b211-4a18-b1f3-5659bb4035f1
+2026-04-20T19:06:22.459+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:22.461+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:22.461+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:22.477+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='5427a772-a49c-417a-b2af-f71d4b2a526b' and payload='SensorReadingEvent(sensorId=5427a772-a49c-417a-b2af-f71d4b2a526b, value=35.31, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:22.477+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=5427a772-a49c-417a-b2af-f71d4b2a526b
+2026-04-20T19:06:23.410+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:23.410+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:23.410+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:23.492+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='d60833f9-52ac-434a-822c-c5767eb6fbe8' and payload='SensorReadingEvent(sensorId=d60833f9-52ac-434a-822c-c5767eb6fbe8, value=33.45, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:23.492+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=d60833f9-52ac-434a-822c-c5767eb6fbe8
+2026-04-20T19:06:24.459+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:24.460+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:24.460+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:24.509+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='341f80c5-adef-44fe-b476-d08c0731a81c' and payload='SensorReadingEvent(sensorId=341f80c5-adef-44fe-b476-d08c0731a81c, value=5.0, recordedAt=2026-04-20T1...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:24.509+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=341f80c5-adef-44fe-b476-d08c0731a81c
+2026-04-20T19:06:25.459+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:25.461+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:25.461+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:25.511+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='00eade84-2712-4bf6-9165-15dc08528a65' and payload='SensorReadingEvent(sensorId=00eade84-2712-4bf6-9165-15dc08528a65, value=1.64, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:25.511+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=00eade84-2712-4bf6-9165-15dc08528a65
+2026-04-20T19:06:26.443+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:26.443+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:26.443+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:26.514+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='295fc7c8-8ab1-414a-95f6-14f068c65909' and payload='SensorReadingEvent(sensorId=295fc7c8-8ab1-414a-95f6-14f068c65909, value=74.78, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:26.514+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=295fc7c8-8ab1-414a-95f6-14f068c65909
+2026-04-20T19:06:27.426+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:27.427+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:27.427+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:28.428+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:28.428+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:28.428+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:29.429+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:29.429+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:29.429+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:30.430+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:30.430+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:30.430+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:31.292+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:31.292+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:31.292+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:32.337+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:32.337+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:32.337+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:32.528+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='33729fb9-bf01-4cf7-9692-8bf3d1d8f87e' and payload='SensorReadingEvent(sensorId=33729fb9-bf01-4cf7-9692-8bf3d1d8f87e, value=22.14, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:32.528+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=33729fb9-bf01-4cf7-9692-8bf3d1d8f87e
+2026-04-20T19:06:33.375+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:33.377+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:33.377+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:33.542+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='58413ed5-029d-4e07-a980-50e9a0689bc3' and payload='SensorReadingEvent(sensorId=58413ed5-029d-4e07-a980-50e9a0689bc3, value=75.06, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:33.542+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=58413ed5-029d-4e07-a980-50e9a0689bc3
+2026-04-20T19:06:34.426+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:34.427+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:34.427+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:34.561+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='10327e81-b719-41a9-8802-3565f014b873' and payload='SensorReadingEvent(sensorId=10327e81-b719-41a9-8802-3565f014b873, value=6.74, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:34.561+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=10327e81-b719-41a9-8802-3565f014b873
+2026-04-20T19:06:35.325+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:35.326+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:35.326+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:35.578+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='9a778e7f-80d0-482a-8161-d4f20d619bd5' and payload='SensorReadingEvent(sensorId=9a778e7f-80d0-482a-8161-d4f20d619bd5, value=65.35, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:35.578+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=9a778e7f-80d0-482a-8161-d4f20d619bd5
+2026-04-20T19:06:36.344+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:36.344+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:36.344+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:36.592+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='50085d19-b211-4a18-b1f3-5659bb4035f1' and payload='SensorReadingEvent(sensorId=50085d19-b211-4a18-b1f3-5659bb4035f1, value=0.79, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:36.592+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=50085d19-b211-4a18-b1f3-5659bb4035f1
+2026-04-20T19:06:37.378+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:37.378+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:37.378+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:37.595+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='5427a772-a49c-417a-b2af-f71d4b2a526b' and payload='SensorReadingEvent(sensorId=5427a772-a49c-417a-b2af-f71d4b2a526b, value=15.57, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:37.595+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=5427a772-a49c-417a-b2af-f71d4b2a526b
+2026-04-20T19:06:38.310+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:38.310+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:38.310+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:38.609+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='d60833f9-52ac-434a-822c-c5767eb6fbe8' and payload='SensorReadingEvent(sensorId=d60833f9-52ac-434a-822c-c5767eb6fbe8, value=37.29, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:38.610+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=d60833f9-52ac-434a-822c-c5767eb6fbe8
+2026-04-20T19:06:39.326+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:39.326+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:39.326+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:39.626+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='341f80c5-adef-44fe-b476-d08c0731a81c' and payload='SensorReadingEvent(sensorId=341f80c5-adef-44fe-b476-d08c0731a81c, value=2.64, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:39.626+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=341f80c5-adef-44fe-b476-d08c0731a81c
+2026-04-20T19:06:40.360+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:40.360+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:40.360+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:40.642+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='00eade84-2712-4bf6-9165-15dc08528a65' and payload='SensorReadingEvent(sensorId=00eade84-2712-4bf6-9165-15dc08528a65, value=2.89, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:40.643+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=00eade84-2712-4bf6-9165-15dc08528a65
+2026-04-20T19:06:41.409+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:41.410+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:41.410+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:41.652+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='295fc7c8-8ab1-414a-95f6-14f068c65909' and payload='SensorReadingEvent(sensorId=295fc7c8-8ab1-414a-95f6-14f068c65909, value=76.26, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:41.652+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=295fc7c8-8ab1-414a-95f6-14f068c65909
+2026-04-20T19:06:42.410+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:42.410+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:42.410+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:43.378+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:43.378+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:43.378+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:44.437+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:44.437+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:44.437+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:45.447+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:45.447+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:45.447+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:46.493+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:46.493+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:46.493+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:47.544+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:47.544+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:47.544+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:47.674+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='33729fb9-bf01-4cf7-9692-8bf3d1d8f87e' and payload='SensorReadingEvent(sensorId=33729fb9-bf01-4cf7-9692-8bf3d1d8f87e, value=75.28, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:47.674+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=33729fb9-bf01-4cf7-9692-8bf3d1d8f87e
+2026-04-20T19:06:48.493+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:48.493+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:48.493+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:48.687+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='58413ed5-029d-4e07-a980-50e9a0689bc3' and payload='SensorReadingEvent(sensorId=58413ed5-029d-4e07-a980-50e9a0689bc3, value=74.17, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:48.687+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=58413ed5-029d-4e07-a980-50e9a0689bc3
+2026-04-20T19:06:49.542+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:49.542+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:49.542+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:49.702+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='10327e81-b719-41a9-8802-3565f014b873' and payload='SensorReadingEvent(sensorId=10327e81-b719-41a9-8802-3565f014b873, value=5.03, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:49.702+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=10327e81-b719-41a9-8802-3565f014b873
+2026-04-20T19:06:50.440+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:50.440+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:50.440+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:50.714+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='9a778e7f-80d0-482a-8161-d4f20d619bd5' and payload='SensorReadingEvent(sensorId=9a778e7f-80d0-482a-8161-d4f20d619bd5, value=32.5, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:50.714+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=9a778e7f-80d0-482a-8161-d4f20d619bd5
+2026-04-20T19:06:51.496+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:51.496+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:51.496+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:51.718+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='50085d19-b211-4a18-b1f3-5659bb4035f1' and payload='SensorReadingEvent(sensorId=50085d19-b211-4a18-b1f3-5659bb4035f1, value=3.8, recordedAt=2026-04-20T1...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:51.718+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=50085d19-b211-4a18-b1f3-5659bb4035f1
+2026-04-20T19:06:52.523+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:52.523+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:52.523+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:52.730+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='5427a772-a49c-417a-b2af-f71d4b2a526b' and payload='SensorReadingEvent(sensorId=5427a772-a49c-417a-b2af-f71d4b2a526b, value=54.4, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:52.730+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=5427a772-a49c-417a-b2af-f71d4b2a526b
+2026-04-20T19:06:53.541+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:53.541+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:53.541+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:53.734+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='d60833f9-52ac-434a-822c-c5767eb6fbe8' and payload='SensorReadingEvent(sensorId=d60833f9-52ac-434a-822c-c5767eb6fbe8, value=31.68, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:53.734+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=d60833f9-52ac-434a-822c-c5767eb6fbe8
+2026-04-20T19:06:54.563+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:54.563+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:54.563+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:54.739+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='341f80c5-adef-44fe-b476-d08c0731a81c' and payload='SensorReadingEvent(sensorId=341f80c5-adef-44fe-b476-d08c0731a81c, value=1.59, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:54.739+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=341f80c5-adef-44fe-b476-d08c0731a81c
+2026-04-20T19:06:55.539+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:55.539+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:55.539+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:55.750+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='00eade84-2712-4bf6-9165-15dc08528a65' and payload='SensorReadingEvent(sensorId=00eade84-2712-4bf6-9165-15dc08528a65, value=2.42, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:55.750+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=00eade84-2712-4bf6-9165-15dc08528a65
+2026-04-20T19:06:56.382+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:56.382+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:56.382+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:56.754+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='295fc7c8-8ab1-414a-95f6-14f068c65909' and payload='SensorReadingEvent(sensorId=295fc7c8-8ab1-414a-95f6-14f068c65909, value=76.55, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:06:56.754+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=295fc7c8-8ab1-414a-95f6-14f068c65909
+2026-04-20T19:06:57.365+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:57.366+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:57.366+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:58.349+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:58.349+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:58.349+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:06:59.382+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:06:59.383+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:06:59.383+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:00.387+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:00.387+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:00.387+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:01.291+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:01.291+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:01.291+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:02.213+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:02.213+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:02.213+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:02.789+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='33729fb9-bf01-4cf7-9692-8bf3d1d8f87e' and payload='SensorReadingEvent(sensorId=33729fb9-bf01-4cf7-9692-8bf3d1d8f87e, value=46.09, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:02.789+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=33729fb9-bf01-4cf7-9692-8bf3d1d8f87e
+2026-04-20T19:07:03.240+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:03.240+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:03.240+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:03.793+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='58413ed5-029d-4e07-a980-50e9a0689bc3' and payload='SensorReadingEvent(sensorId=58413ed5-029d-4e07-a980-50e9a0689bc3, value=72.01, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:03.793+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=58413ed5-029d-4e07-a980-50e9a0689bc3
+2026-04-20T19:07:04.182+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:04.182+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:04.182+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:04.804+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='10327e81-b719-41a9-8802-3565f014b873' and payload='SensorReadingEvent(sensorId=10327e81-b719-41a9-8802-3565f014b873, value=3.87, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:04.804+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=10327e81-b719-41a9-8802-3565f014b873
+2026-04-20T19:07:05.124+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:05.124+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:05.124+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:05.813+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='9a778e7f-80d0-482a-8161-d4f20d619bd5' and payload='SensorReadingEvent(sensorId=9a778e7f-80d0-482a-8161-d4f20d619bd5, value=28.31, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:05.813+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=9a778e7f-80d0-482a-8161-d4f20d619bd5
+2026-04-20T19:07:06.182+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:06.182+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:06.182+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:06.823+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='50085d19-b211-4a18-b1f3-5659bb4035f1' and payload='SensorReadingEvent(sensorId=50085d19-b211-4a18-b1f3-5659bb4035f1, value=0.1, recordedAt=2026-04-20T1...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:06.823+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=50085d19-b211-4a18-b1f3-5659bb4035f1
+2026-04-20T19:07:07.203+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:07.207+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:07.207+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:07.829+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='5427a772-a49c-417a-b2af-f71d4b2a526b' and payload='SensorReadingEvent(sensorId=5427a772-a49c-417a-b2af-f71d4b2a526b, value=46.4, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:07.829+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=5427a772-a49c-417a-b2af-f71d4b2a526b
+2026-04-20T19:07:08.086+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:08.086+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:08.086+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:08.846+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='d60833f9-52ac-434a-822c-c5767eb6fbe8' and payload='SensorReadingEvent(sensorId=d60833f9-52ac-434a-822c-c5767eb6fbe8, value=41.1, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:08.846+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=d60833f9-52ac-434a-822c-c5767eb6fbe8
+2026-04-20T19:07:08.973+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:08.973+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:08.973+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:09.854+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='341f80c5-adef-44fe-b476-d08c0731a81c' and payload='SensorReadingEvent(sensorId=341f80c5-adef-44fe-b476-d08c0731a81c, value=2.8, recordedAt=2026-04-20T1...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:09.854+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=341f80c5-adef-44fe-b476-d08c0731a81c
+2026-04-20T19:07:09.981+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:09.981+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:09.981+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:10.859+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='00eade84-2712-4bf6-9165-15dc08528a65' and payload='SensorReadingEvent(sensorId=00eade84-2712-4bf6-9165-15dc08528a65, value=1.3, recordedAt=2026-04-20T1...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:10.859+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=00eade84-2712-4bf6-9165-15dc08528a65
+2026-04-20T19:07:10.987+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:10.987+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:10.987+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:11.880+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='295fc7c8-8ab1-414a-95f6-14f068c65909' and payload='SensorReadingEvent(sensorId=295fc7c8-8ab1-414a-95f6-14f068c65909, value=103.15, recordedAt=2026-04-2...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:11.880+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=295fc7c8-8ab1-414a-95f6-14f068c65909
+2026-04-20T19:07:11.991+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:11.991+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:11.991+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:13.018+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:13.018+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:13.018+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:13.919+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:13.919+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:13.919+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:14.776+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:14.776+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:14.776+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:15.776+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:15.776+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:15.776+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:16.826+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:16.826+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:16.826+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:17.766+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:17.767+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:17.767+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:17.895+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='33729fb9-bf01-4cf7-9692-8bf3d1d8f87e' and payload='SensorReadingEvent(sensorId=33729fb9-bf01-4cf7-9692-8bf3d1d8f87e, value=22.0, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:17.895+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=33729fb9-bf01-4cf7-9692-8bf3d1d8f87e
+2026-04-20T19:07:18.626+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:18.626+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:18.626+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:18.922+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='58413ed5-029d-4e07-a980-50e9a0689bc3' and payload='SensorReadingEvent(sensorId=58413ed5-029d-4e07-a980-50e9a0689bc3, value=78.62, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:18.922+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=58413ed5-029d-4e07-a980-50e9a0689bc3
+2026-04-20T19:07:19.650+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:19.650+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:19.650+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:19.930+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='10327e81-b719-41a9-8802-3565f014b873' and payload='SensorReadingEvent(sensorId=10327e81-b719-41a9-8802-3565f014b873, value=4.27, recordedAt=2026-04-20T...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:19.930+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=10327e81-b719-41a9-8802-3565f014b873
+2026-04-20T19:07:20.656+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:20.656+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:20.656+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:20.947+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='9a778e7f-80d0-482a-8161-d4f20d619bd5' and payload='SensorReadingEvent(sensorId=9a778e7f-80d0-482a-8161-d4f20d619bd5, value=38.16, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:20.947+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=9a778e7f-80d0-482a-8161-d4f20d619bd5
+2026-04-20T19:07:21.705+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:21.706+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:21.706+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:21.957+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='50085d19-b211-4a18-b1f3-5659bb4035f1' and payload='SensorReadingEvent(sensorId=50085d19-b211-4a18-b1f3-5659bb4035f1, value=5.2, recordedAt=2026-04-20T1...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:21.957+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=50085d19-b211-4a18-b1f3-5659bb4035f1
+2026-04-20T19:07:22.706+03:00  INFO 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Node -1 disconnected.
+2026-04-20T19:07:22.706+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-04-20T19:07:22.706+03:00  WARN 9212 --- [faultstream] [ream-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=faultstream-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-20T19:07:22.968+03:00 ERROR 9212 --- [faultstream] [   scheduling-1] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='5427a772-a49c-417a-b2af-f71d4b2a526b' and payload='SensorReadingEvent(sensorId=5427a772-a49c-417a-b2af-f71d4b2a526b, value=54.17, recordedAt=2026-04-20...' to topic sensor-readings:
+
+org.apache.kafka.common.errors.TimeoutException: Topic sensor-readings not present in metadata after 1000 ms.
+
+2026-04-20T19:07:22.968+03:00  WARN 9212 --- [faultstream] [   scheduling-1] c.f.d.s.stream.SensorSimulationService   : Kafka unavailable, falling back to direct ingestion for sensor=5427a772-a49c-417a-b2af-f71d4b2a526b

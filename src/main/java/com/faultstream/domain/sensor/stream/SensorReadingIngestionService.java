@@ -1,6 +1,7 @@
 package com.faultstream.domain.sensor.stream;
-import com.faultstream.domain.alert.IncidentAutomationService;
 import com.faultstream.common.exception.ResourceNotFoundException;
+import com.faultstream.domain.alert.IncidentAutomationService;
+import com.faultstream.domain.dashboard.DashboardCacheService;
 import com.faultstream.domain.sensor.Sensor;
 import com.faultstream.domain.sensor.SensorReading;
 import com.faultstream.domain.sensor.SensorReadingRepository;
@@ -15,6 +16,7 @@ public class SensorReadingIngestionService {
     private final SensorRepository sensorRepository;
     private final SensorReadingRepository sensorReadingRepository;
     private final IncidentAutomationService incidentAutomationService;
+    private final DashboardCacheService dashboardCacheService;
 
     @Transactional
     public void ingest(SensorReadingEvent event) {
@@ -28,5 +30,6 @@ public class SensorReadingIngestionService {
                 .build();
         SensorReading saved = sensorReadingRepository.save(reading);
         incidentAutomationService.processReading(saved);
+        dashboardCacheService.evictTerminalSnapshot();
     }
 }

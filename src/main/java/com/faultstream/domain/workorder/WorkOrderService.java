@@ -64,6 +64,9 @@ public class WorkOrderService {
                 .orElseThrow(() -> new ResourceNotFoundException("Work order bulunamadi"));
         User technician = userRepository.findById(technicianId)
                 .orElseThrow(() -> new ResourceNotFoundException("Technician bulunamadi"));
+        if (technician.getRole() != UserRole.TECHNICIAN) {
+            throw new IllegalArgumentException("Atanan kullanici technician rolunde olmali");
+        }
         workOrder.setAssignedTo(technician);
         if (workOrder.getStatus() == WorkOrderStatus.OPEN) {
             workOrder.setStatus(WorkOrderStatus.IN_PROGRESS);

@@ -6,6 +6,7 @@ import com.faultstream.domain.maintenance.dto.CreateMaintenanceLogRequest;
 import com.faultstream.domain.maintenance.dto.MaintenanceLogResponse;
 import com.faultstream.domain.user.User;
 import com.faultstream.domain.user.UserRepository;
+import com.faultstream.domain.user.UserRole;
 import com.faultstream.domain.workorder.WorkOrder;
 import com.faultstream.domain.workorder.WorkOrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -58,10 +59,22 @@ public class MaintenanceLogService {
 
     private User resolveTechnician(UUID technicianId, WorkOrder workOrder) {
         if (technicianId != null) {
-            return userRepository.findById(technicianId)
+            User technician = userRepository.findById(technicianId)
                     .orElseThrow(() -> new ResourceNotFoundException("Technician bulunamadi"));
+            validateTechnicianRole(technician);
+            return technician;
         }
-        return workOrder.getAssignedTo();
+        User technician = workOrder.getAssignedTo();
+        if (technician != null) {
+            validateTechnicianRole(technician);
+        }
+        return technician;
+    }
+
+    private void validateTechnicianRole(User technician) {
+        if (technician.getRole() != UserRole.TECHNICIAN) {
+            throw new IllegalArgumentException("Maintenance log icin technician rolunde bir kullanici secilmelidir");
+        }
     }
 
     private MaintenanceLogResponse mapToResponse(MaintenanceLog log) {

@@ -186,4 +186,41 @@ class AlertWorkflowIntegrationTest {
         assertNotNull(updatedEquipment.getLastMaintenanceDate());
         assertEquals(1, maintenanceLogRepository.count());
     }
+
+    @Test
+    void dashboardTerminal_ShouldReflectLiveReadings() throws Exception {
+        ingestionService.ingest(SensorReadingEvent.builder()
+                .sensorId(sensor.getId())
+                .value(128.0)
+                .recordedAt(LocalDateTime.now().toString())
+                .source("integration-test")
+                .build());
+
+        mockMvc.perform(get("/api/v1/dashboard/terminal"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data.stats.activeNodes").value(1))
+                .andExpect(jsonPath("$.data.stats.recordedAnomalies").value(1))
+                .andExpect(jsonPath("$.data.stream", hasSize(1)))
+                .andExpect(jsonPath("$.data.stream[0].equipment").value("TRB-01"))
+                .andExpect(jsonPath("$.data.stream[0].severity").value("CRIT"));
+    }
+
+    @Test
+    void assignWorkOrder_ShouldRejectNonTechnicianUsers() throws Exception {
+        ingestionService.ingest(SensorReadingEvent.builder()
+                .sensorId(sensor.getId())
+                .value(127.0)
+                .recordedAt(LocalDateTime.now().toString())
+                .source("integration-test")
+                .build());
+
+        WorkOrder workOrder = workOrderRepository.findAll().get(0);
+
+        mockMvc.perform(put("/api/v1/work-orders/{id}/assign", workOrder.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(Map.of("technicianId", engineer.getId()))))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Atanan kullanici technician rolunde olmali"));
+    }
 }
