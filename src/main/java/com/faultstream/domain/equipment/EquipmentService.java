@@ -15,14 +15,14 @@ public class EquipmentService {
     @Transactional
     public EquipmentResponse createEquipment(CreateEquipmentRequest request) {
         Equipment equipment = Equipment.builder()
-                .name(request.getName())
-                .type(request.getType())
-                .location(request.getLocation())
-                .building(request.getBuilding())
-                .floor(request.getFloor())
-                .manufacturer(request.getManufacturer())
-                .model(request.getModel())
-                .serialNumber(request.getSerialNumber())
+                .name(request.name())
+                .type(request.type())
+                .location(request.location())
+                .building(request.building())
+                .floor(request.floor())
+                .manufacturer(request.manufacturer())
+                .model(request.model())
+                .serialNumber(request.serialNumber())
                 .build();
         Equipment savedEquipment = equipmentRepository.save(equipment);
         return mapToResponse(savedEquipment);

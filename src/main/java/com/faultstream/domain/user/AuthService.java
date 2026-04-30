@@ -16,23 +16,23 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     public AuthResponse register(RegisterRequest request) {
-        String encodedPassword = passwordEncoder.encode(request.getPassword());
+        String encodedPassword = passwordEncoder.encode(request.password());
         User user = User.builder()
-                .fullName(request.getFullName())
-                .email(request.getEmail())
+                .fullName(request.fullName())
+                .email(request.email())
                 .password(encodedPassword)
                 .role(UserRole.ENGINEER)
-                .department(request.getDepartment())
+                .department(request.department())
                 .build();
         userRepository.save(user);
         String token = jwtService.generateToken(user);
-        return AuthResponse.builder().token(token).build();
+        return new AuthResponse(token);
     } 
     public AuthResponse authenticate(String email, String password) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(email, password));
         User user = userRepository.findByEmail(email).orElseThrow();
         String token = jwtService.generateToken(user);
-        return AuthResponse.builder().token(token).build();
+        return new AuthResponse(token);
     }
 }

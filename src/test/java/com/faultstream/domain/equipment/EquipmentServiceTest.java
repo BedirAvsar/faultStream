@@ -33,18 +33,20 @@ class EquipmentServiceTest {
                 .status(EquipmentStatus.ACTIVE)
                 .location("B Blok")
                 .build();
-        createRequest = new CreateEquipmentRequest();
-        createRequest.setName("Test Sensörlü Pompa");
-        createRequest.setType(EquipmentType.PUMP);
-        createRequest.setLocation("B Blok");
+        createRequest = new CreateEquipmentRequest(
+                "Test Sensörlü Pompa",
+                EquipmentType.PUMP,
+                "B Blok",
+                null, null, null, null, null
+        );
     }
     @Test
     void createEquipment_ShouldReturnResponse_WhenValidRequest() {
         when(equipmentRepository.save(any(Equipment.class))).thenReturn(equipment);
         EquipmentResponse response = equipmentService.createEquipment(createRequest);
         assertNotNull(response);
-        assertEquals("Test Sensörlü Pompa", response.getName());
-        assertEquals(EquipmentType.PUMP, response.getType());
+        assertEquals("Test Sensörlü Pompa", response.name());
+        assertEquals(EquipmentType.PUMP, response.type());
         verify(equipmentRepository, times(1)).save(any(Equipment.class));
     }
     @Test
@@ -52,7 +54,7 @@ class EquipmentServiceTest {
         when(equipmentRepository.findById(equipmentId)).thenReturn(Optional.of(equipment));
         EquipmentResponse response = equipmentService.getEquipmentById(equipmentId);
         assertNotNull(response);
-        assertEquals(equipmentId, response.getId());
+        assertEquals(equipmentId, response.id());
         verify(equipmentRepository, times(1)).findById(equipmentId);
     }
     @Test
@@ -69,6 +71,6 @@ class EquipmentServiceTest {
         List<EquipmentResponse> responseList = equipmentService.getAllEquipments();
         assertFalse(responseList.isEmpty());
         assertEquals(1, responseList.size());
-        assertEquals("Test Sensörlü Pompa", responseList.get(0).getName());
+        assertEquals("Test Sensörlü Pompa", responseList.get(0).name());
     }
 }

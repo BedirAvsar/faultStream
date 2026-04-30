@@ -58,10 +58,12 @@ class EquipmentControllerTest {
     }
     @Test
     void createEquipment_ShouldReturn201_WhenValidRequest() throws Exception {
-        CreateEquipmentRequest request = new CreateEquipmentRequest();
-        request.setName("Yeni Pompa");
-        request.setType(EquipmentType.PUMP);
-        request.setLocation("C Blok");
+        CreateEquipmentRequest request = new CreateEquipmentRequest(
+            "Yeni Pompa",
+            EquipmentType.PUMP,
+            "C Blok",
+            null, null, null, null, null
+        );
         when(equipmentService.createEquipment(any(CreateEquipmentRequest.class))).thenReturn(equipmentResponse);
         mockMvc.perform(post("/api/v1/equipments")
                 .contentType(org.springframework.http.MediaType.APPLICATION_JSON)

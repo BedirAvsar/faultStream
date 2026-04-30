@@ -13,12 +13,35 @@ const FAULT_TYPES = [
   { type: "LINK_FAILURE", icon: WifiOff, color: "#52525b" }   
 ];
 const EQUIPMENTS = ["TRB-01", "CNV-A", "PMP-B", "HUB-X", "GEN-04"];
+interface FaultLog {
+  id: number;
+  time: string;
+  eqp: string;
+  type: string;
+  severity: "CRIT" | "WARN";
+  color: string;
+}
+
+function createRandomLog(idSeed: number): FaultLog {
+  const fault = FAULT_TYPES[Math.floor(Math.random() * FAULT_TYPES.length)];
+  return {
+    id: Date.now() + idSeed,
+    time: new Date().toLocaleTimeString('en-US', { hour12: false }),
+    eqp: EQUIPMENTS[Math.floor(Math.random() * EQUIPMENTS.length)],
+    type: fault.type,
+    severity: fault.type === "THERMAL_OVERLOAD" ? "CRIT" : "WARN",
+    color: fault.color
+  };
+}
+
 export default function Dashboard() {
-  const [logs, setLogs] = useState<any[]>([]);
-  const [stats, setStats] = useState({ active: 42, total: 23, health: 94.1 });
-  useEffect(() => {
+  const [logs, setLogs] = useState<FaultLog[]>(() => {
     const initialLogs = Array.from({ length: 9 }).map((_, i) => createRandomLog(i));
-    setLogs(initialLogs.reverse());
+    return initialLogs.reverse();
+  });
+  const [stats, setStats] = useState({ active: 42, total: 23, health: 94.1 });
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setLogs((prev) => [createRandomLog(Math.random()), ...prev].slice(0, 9));
       setStats(prev => ({
@@ -29,17 +52,7 @@ export default function Dashboard() {
     }, 3500);
     return () => clearInterval(interval);
   }, []);
-  function createRandomLog(idSeed: number) {
-    const fault = FAULT_TYPES[Math.floor(Math.random() * FAULT_TYPES.length)];
-    return {
-      id: Date.now() + idSeed,
-      time: new Date().toLocaleTimeString('en-US', { hour12: false }),
-      eqp: EQUIPMENTS[Math.floor(Math.random() * EQUIPMENTS.length)],
-      type: fault.type,
-      severity: fault.type === "THERMAL_OVERLOAD" ? "CRIT" : "WARN",
-      color: fault.color
-    };
-  }
+
   const pieData = [
     { name: "SYS_DESYNC", value: 45, color: "#eab308" },
     { name: "THERMAL", value: 20, color: "#ef4444" },

@@ -1,175 +1,175 @@
-# FaultStream — Geliştirme Yol Haritası (Master Roadmap)
+# FaultStream — Development Roadmap (Master Roadmap)
 
-> Her versiyon için zorunlu görevler, önerilen eklemeler ve mimari notlar bu dosya üzerinden takip edilmektedir.
-
----
-
-## [x] v1.0.0 — The Foundation (Tamamlandı)
-- [x] Docker Compose altyapısının kurulması (PostgreSQL, Kafka, Zookeeper, Redis).
-- [x] Spring Security ve JWT altyapısı (Role-Based Access Control).
-- [x] User Domain: Kimlik doğrulama, Kayıt, Login işlemleri.
-- [x] Equipment Domain: Ekipman envanter yönetimi, servis mantığı ve Mockito/MockMvc birim testleri.
-
-## [x] v2.0.0 — Clean Code & Operations Dashboard (Tamamlandı)
-- [x] Özel Python betiği ile projedeki tüm teknik yorumların temizlenmesi (Clean Code).
-- [x] Next.js (App Router) ile bağımsız bir frontend uygulamasının (faultstream-dashboard) kurulması.
-- [x] Siber Güvenlik / NOC esintili minimalist "Dark Mode" arayüzünün oluşturulması.
-- [x] Lucide ikonları ve Recharts ile simüle edilmiş (Mock) gerçek zamanlı gösterge panelinin entegre edilmesi.
+> Mandatory tasks, recommended additions, and architectural notes for each version are tracked through this file.
 
 ---
 
-## [ ] v3.0.0 — Sensor Data & Event Streaming
+## [x] v1.0.0 — The Foundation (Completed)
+- [x] Setting up Docker Compose infrastructure (PostgreSQL, Kafka, Zookeeper, Redis).
+- [x] Spring Security and JWT infrastructure (Role-Based Access Control).
+- [x] User Domain: Authentication, Registration, Login operations.
+- [x] Equipment Domain: Equipment inventory management, service logic, and Mockito/MockMvc unit tests.
 
-**Hedef:** Makinelerin nabzını dinlemeye ve verileri akıtmaya başlamak.
-
-- [ ] **Sensor Domain:** Sensör ve Sensör Okumaları (SensorReading) Entity, Repo, Servis modülleri.
-- [ ] **Flyway:** V3 ve V4 veritabanı göç (migration) SQL'lerinin yazılması.
-- [ ] **Kafka Producer:** `SensorSimulatorScheduler` ile arka planda sensör değerleri üretip Kafka'ya (sensor-readings) basmak.
-- [ ] **Kafka Consumer:** Sensör verilerini Kafka'dan okuyan ana `SensorDataConsumer` servisinin yazılması.
-
-### Zorunlu Görevler
-
-- [ ] `Sensor` Entity oluştur (id, name, equipmentId, type, unit, location)
-- [ ] `SensorReading` Entity oluştur (id, sensorId, value, timestamp, status)
-- [ ] `SensorRepository` ve `SensorReadingRepository` yaz
-- [ ] `SensorService` — CRUD + son okuma sorgulama
-- [ ] Flyway `V3__create_sensor_table.sql` yaz
-- [ ] Flyway `V4__create_sensor_reading_table.sql` yaz
-- [ ] `SensorSimulatorScheduler` — @Scheduled ile arka planda rastgele değer üret, Kafka'ya bas
-- [ ] Kafka topic `sensor-readings` konfigürasyonunu tamamla
-- [ ] `SensorDataConsumer` — Kafka'dan oku, SensorReading olarak kaydet
-- [ ] `SensorController` — REST endpoint'leri (GET /sensors, GET /sensors/{id}/readings)
-- [ ] Birim testleri: SensorService için Mockito testleri
-
-### Önerilen Eklemeler
-
-- [ ] **Sensör tipi enum'u** (TEMPERATURE, VIBRATION, HUMIDITY, PRESSURE, CURRENT) — ilerideki threshold kurallarını kolaylaştırır
-- [ ] **Veri kalite filtresi** — Consumer içinde NaN, null veya fizik dışı değerleri (örn. sıcaklık -999) at, loglama yap
-- [ ] **MQTT adapter** — `SensorSimulatorScheduler` yerine opsiyonel MQTT gateway desteği ekle; gerçek donanımla bağlantıyı hazırlar
-- [ ] **TimescaleDB migration araştırması** — Zaman serisi sorguları PostgreSQL'de yavaşlar; `CREATE TABLE ... PARTITION BY RANGE (timestamp)` ile başla
-- [ ] **Son N okuma sliding window endpoint'i** — `GET /sensors/{id}/readings?last=100` gibi; dashboard için kritik
-- [ ] **Sensör sağlık durumu** (ONLINE / OFFLINE / DEGRADED) — Son X saniyede okuma gelmediyse OFFLINE işaretle
+## [x] v2.0.0 — Clean Code & Operations Dashboard (Completed)
+- [x] Cleaning all technical comments in the project with a custom Python script (Clean Code).
+- [x] Setting up an independent frontend application (faultstream-dashboard) with Next.js (App Router).
+- [x] Creating a minimalist "Dark Mode" interface inspired by Cyber Security / NOC.
+- [x] Integrating a simulated (Mock) real-time dashboard using Lucide icons and Recharts.
 
 ---
 
-## [ ] v4.0.0 — Autonomous Alerting & Work Orders
+## [x] v3.0.0 — Sensor Data & Event Streaming
 
-**Hedef:** Sisteme "beyin" eklemek. İnsan müdahalesi olmadan tehditleri algılayıp müdahale başlatan yapı.
+**Goal:** Start listening to the machines' pulse and stream the data.
 
-- [ ] **Gereksinimler:** Alert ve WorkOrder (İş Emri) Domain'lerinin (Entity, Servis, vs.) kodlanması.
-- [ ] **Flyway:** V5 ve V6 veritabanı tablolarının oluşturulması.
-- [ ] **Otonom Algılama:** Kafka Consumer içine "Eşik Değeri (Threshold)" kontrolleri eklenmesi.
-- [ ] **Otomasyon:** Değer aşılırsa otomatik ALARM üretilmesi, seviye CRITICAL ise mühendisten bağımsız doğrudan TEKNİSYEN'e İş Emri atanması.
-- [ ] **Performans:** Redis Cache kullanılarak anlık alarm durumlarının ve Dashboard verilerinin bellekte tutulması (Veritabanı yükünü %80 azaltma).
+- [x] **Sensor Domain:** Sensor and Sensor Readings (SensorReading) Entity, Repo, Service modules.
+- [x] **Flyway:** Writing V3 and V4 database migration SQLs.
+- [x] **Kafka Producer:** Generating sensor values in the background with `SensorSimulatorScheduler` and pushing to Kafka (sensor-readings).
+- [x] **Kafka Consumer:** Writing the main `SensorDataConsumer` service that reads sensor data from Kafka.
 
-### Zorunlu Görevler
+### Mandatory Tasks
 
-- [ ] `Alert` Entity oluştur (id, sensorId, equipmentId, level, message, triggeredAt, resolvedAt, status)
-- [ ] `WorkOrder` Entity oluştur (id, alertId, assignedTechnicianId, status, createdAt, completedAt, notes)
-- [ ] `AlertRepository` ve `WorkOrderRepository` yaz
-- [ ] `AlertService` — alarm oluşturma, çözümleme, durum güncelleme
-- [ ] `WorkOrderService` — iş emri oluşturma, atama, tamamlama
-- [ ] Flyway `V5__create_alert_table.sql` yaz
-- [ ] Flyway `V6__create_work_order_table.sql` yaz
-- [ ] `SensorDataConsumer` içine threshold kontrol mantığı ekle
-- [ ] Threshold aşılınca otomatik `Alert` oluştur (WARNING / CRITICAL seviye ayrımı)
-- [ ] CRITICAL seviyede direkt teknisyene `WorkOrder` ata (mühendis onayı gerektirmesin)
-- [ ] Redis Cache — aktif alarm durumlarını ve dashboard özetlerini cache'e al
-- [ ] Redis TTL stratejisi belirle (alarm için 5 dk, dashboard için 30 sn önerilir)
-- [ ] `AlertController` ve `WorkOrderController` REST endpoint'leri
+- [x] Create `Sensor` Entity (id, name, equipmentId, type, unit, location)
+- [x] Create `SensorReading` Entity (id, sensorId, value, timestamp, status)
+- [x] Write `SensorRepository` and `SensorReadingRepository`
+- [x] `SensorService` — CRUD + query latest reading
+- [x] Write Flyway `V3__create_sensor_table.sql`
+- [x] Write Flyway `V4__create_sensor_reading_table.sql`
+- [x] `SensorSimulatorScheduler` — Generate random values in the background with @Scheduled, push to Kafka
+- [x] Complete Kafka topic `sensor-readings` configuration
+- [x] `SensorDataConsumer` — Read from Kafka, save as SensorReading
+- [x] `SensorController` — REST endpoints (GET /sensors, GET /sensors/{id}/readings)
+- [x] Unit tests: Mockito tests for SensorService
 
-### Önerilen Eklemeler
+### Recommended Additions
 
-- [ ] **Threshold kurallarını DB'ye taşı** — Kod içinde sabit eşik değerleri yerine `ThresholdRule` entity'si; her sensör için farklı kural ayarlanabilsin
-- [ ] **Alert susturma (snooze) mekanizması** — "Bu alarmı 2 saat sustur" kuralı; mesai saati dışı gürültüyü azaltır
-- [ ] **Alarm eskalasyon zinciri** — 30 dk içinde teknisyen yanıt vermezse mühendise ilet; mühendis de yanıt vermezse yöneticiye
-- [ ] **SMS / E-posta bildirimi** — Spring Mail + Twilio SMS entegrasyonu; CRITICAL alarmda anlık bildirim
-- [ ] **Shift takvimi** — Hangi teknisyen hangi vardiyada? İş emirleri aktif vardiyaya atansın
-- [ ] **Alarm patlama koruması (alert storm)** — Aynı sensörden 1 dakikada 50 alarm gelirse tek alarm üret; Kafka consumer'a debounce ekle
-- [ ] **WorkOrder mobil görünümü** — Dashboard'a teknisyen için basit mobil-first iş emri ekranı ekle
+- [x] **Sensor type enum** (TEMPERATURE, VIBRATION, HUMIDITY, PRESSURE, CURRENT) — eases future threshold rules
+- [ ] **Data quality filter** — Drop NaN, null, or non-physical values (e.g., temperature -999) inside the Consumer, add logging
+- [ ] **MQTT adapter** — Add optional MQTT gateway support instead of `SensorSimulatorScheduler`; prepares connection with real hardware
+- [ ] **TimescaleDB migration research** — Time series queries slow down in PostgreSQL; start with `CREATE TABLE ... PARTITION BY RANGE (timestamp)`
+- [x] **Last N readings sliding window endpoint** — Like `GET /sensors/{id}/readings?last=100`; critical for the dashboard
+- [ ] **Sensor health status** (ONLINE / OFFLINE / DEGRADED) — Mark OFFLINE if no reading is received in the last X seconds
+
+---
+
+## [x] v4.0.0 — Autonomous Alerting & Work Orders
+
+**Goal:** Add a "brain" to the system. A structure that detects threats and initiates intervention without human involvement.
+
+- [x] **Requirements:** Coding Alert and WorkOrder Domain modules (Entity, Service, etc.).
+- [x] **Flyway:** Creating V5 and V6 database tables.
+- [x] **Autonomous Detection:** Adding "Threshold" checks into the Kafka Consumer.
+- [x] **Automation:** Generating an automatic ALERT if the value is exceeded, assigning a Work Order directly to the TECHNICIAN independent of the engineer if the level is CRITICAL.
+- [x] **Performance:** Keeping instant alert statuses and Dashboard data in memory using Redis Cache (80% database load reduction).
+
+### Mandatory Tasks
+
+- [x] Create `Alert` Entity (id, sensorId, equipmentId, level, message, triggeredAt, resolvedAt, status)
+- [x] Create `WorkOrder` Entity (id, alertId, assignedTechnicianId, status, createdAt, completedAt, notes)
+- [x] Write `AlertRepository` and `WorkOrderRepository`
+- [x] `AlertService` — alert creation, resolution, status update
+- [x] `WorkOrderService` — work order creation, assignment, completion
+- [x] Write Flyway `V5__create_alert_table.sql`
+- [x] Write Flyway `V6__create_work_order_table.sql`
+- [x] Add threshold check logic into `SensorDataConsumer`
+- [x] Auto-create `Alert` when threshold is exceeded (WARNING / CRITICAL level distinction)
+- [x] Directly assign `WorkOrder` to technician at CRITICAL level (no engineer approval needed)
+- [x] Redis Cache — cache active alert statuses and dashboard summaries
+- [x] Determine Redis TTL strategy (5 min for alerts, 30 sec for dashboard recommended)
+- [x] `AlertController` and `WorkOrderController` REST endpoints
+
+### Recommended Additions
+
+- [ ] **Move threshold rules to DB** — `ThresholdRule` entity instead of hardcoded threshold values; allowing different rules per sensor
+- [ ] **Alert snooze mechanism** — "Snooze this alert for 2 hours" rule; reduces noise outside working hours
+- [ ] **Alert escalation chain** — Escalate to engineer if technician doesn't respond in 30 mins; escalate to manager if engineer doesn't respond
+- [ ] **SMS / Email notification** — Spring Mail + Twilio SMS integration; instant notification on CRITICAL alerts
+- [ ] **Shift schedule** — Which technician is on which shift? Assign work orders to the active shift
+- [ ] **Alert storm protection** — Generate a single alert if 50 alerts come from the same sensor in 1 minute; add debounce to Kafka consumer
+- [ ] **WorkOrder mobile view** — Add a simple mobile-first work order screen for technicians to the Dashboard
 
 ---
 
 ## [ ] v5.0.0 — Maintenance Tracking & Full API Integration
 
-**Hedef:** Teknolojiyi birleştirmek. Next.js ile Spring Boot'un gerçek anlamda haberleşmesi ve bakım geçmişinin tutulması.
+**Goal:** Connect the technologies. Real communication between Next.js and Spring Boot and keeping a maintenance history.
 
-- [ ] **Maintenance Domain:** Bakım Logları (MaintenanceLog) yapısının kodlanması ve V7 SQL script'i.
-- [ ] **Dashboard API:** Frontend'in ihtiyaç duyduğu istatistikler için `DashboardController` uçlarının (endpoint) Redis destekli hazırlanması.
-- [ ] **Frontend Live Integration:** Next.js Dashboard'daki "Mock (Sahte)" döngünün silinip, SSE veya REST ile gerçek Spring Boot verilerine bağlanması.
-- [ ] **Testcontainers:** Lokal H2 veritabanı testlerinin iptal edilip, gerçek Docker-Postgres container'larında end-to-end (uçtan uca) Integration Testlerin yazılması.
+- [ ] **Maintenance Domain:** Coding the Maintenance Logs (MaintenanceLog) structure and V7 SQL script.
+- [ ] **Dashboard API:** Preparing Redis-backed `DashboardController` endpoints for the statistics needed by the frontend.
+- [ ] **Frontend Live Integration:** Removing the "Mock" loop in the Next.js Dashboard and connecting to real Spring Boot data via SSE or REST.
+- [ ] **Testcontainers:** Canceling local H2 database tests and writing end-to-end Integration Tests on real Docker-Postgres containers.
 
-### Zorunlu Görevler
+### Mandatory Tasks
 
-- [ ] `MaintenanceLog` Entity oluştur (id, workOrderId, equipmentId, technicianId, action, duration, parts, cost, createdAt)
-- [ ] `MaintenanceLogRepository` ve `MaintenanceLogService` yaz
-- [ ] Flyway `V7__create_maintenance_log_table.sql` yaz
-- [ ] `DashboardController` — frontend'in ihtiyaç duyduğu istatistik endpoint'leri
-  - [ ] `GET /dashboard/summary` — toplam ekipman, aktif alarm, açık iş emri sayısı
+- [ ] Create `MaintenanceLog` Entity (id, workOrderId, equipmentId, technicianId, action, duration, parts, cost, createdAt)
+- [ ] Write `MaintenanceLogRepository` and `MaintenanceLogService`
+- [ ] Write Flyway `V7__create_maintenance_log_table.sql`
+- [ ] `DashboardController` — statistic endpoints needed by the frontend
+  - [ ] `GET /dashboard/summary` — total equipment, active alerts, open work orders count
   - [ ] `GET /dashboard/sensor-stream` — SSE endpoint (Server-Sent Events)
-  - [ ] `GET /dashboard/alerts/recent` — son 24 saat alarmları
-  - [ ] `GET /dashboard/equipment/health` — ekipman bazında sağlık skoru
-- [ ] Frontend'deki mock döngüyü sil, SSE ile gerçek veriye bağla
-- [ ] Next.js `useEffect` + `EventSource` ile canlı güncelleme hook'u yaz
-- [ ] H2 testlerini kaldır, Testcontainers konfigürasyonu ekle
-- [ ] PostgreSQL container ile end-to-end integration testleri yaz
+  - [ ] `GET /dashboard/alerts/recent` — last 24 hours alerts
+  - [ ] `GET /dashboard/equipment/health` — equipment-based health score
+- [ ] Remove mock loop in frontend, connect to real data via SSE
+- [ ] Write Next.js `useEffect` + `EventSource` live update hook
+- [ ] Remove H2 tests, add Testcontainers configuration
+- [ ] Write end-to-end integration tests with PostgreSQL container
 
-### Önerilen Eklemeler
+### Recommended Additions
 
-- [ ] **MTTR (Mean Time To Repair) hesaplama** — WorkOrder kapanış sürelerinden otomatik; "Bu ekipman ortalama 2.3 saatte tamir ediliyor" göster
-- [ ] **OEE (Overall Equipment Effectiveness) temel hesabı** — availability × performance × quality; üretim tesisleri için kritik metrik
-- [ ] **Maliyet takibi** — MaintenanceLog'daki `cost` alanından aylık/yıllık bakım harcaması raporu
-- [ ] **Yedek parça stok uyarısı** — Sık kullanılan parçaların stok eşiği; "Rulman stoğu 2 kaldı" uyarısı
-- [ ] **PDF rapor dışa aktarma** — Aylık bakım özeti; müşteri yöneticisine gönderilebilir
-- [ ] **ERP webhook** — MaintenanceLog kaydedilince dışarıya POST; SAP/Logo gibi sistemlerle entegrasyon kapısı
-- [ ] **Mobil responsive tam desteği** — Teknisyen tabletten/telefondan iş emrini görebilmeli
-- [ ] **Multi-tenant mimari hazırlığı** — Her müşteri (fabrika) verisini izole et; `tenantId` tüm entity'lere ekle
+- [ ] **MTTR (Mean Time To Repair) calculation** — Automatic from WorkOrder closing times; show "This equipment is repaired in 2.3 hours on average"
+- [ ] **Basic OEE (Overall Equipment Effectiveness) calculation** — availability × performance × quality; critical metric for manufacturing plants
+- [ ] **Cost tracking** — Monthly/yearly maintenance expense report from the `cost` field in MaintenanceLog
+- [ ] **Spare part stock warning** — Stock threshold for frequently used parts; "Only 2 bearings left" warning
+- [ ] **PDF report export** — Monthly maintenance summary; can be sent to client manager
+- [ ] **ERP webhook** — Outbound POST when MaintenanceLog is saved; integration gateway for systems like SAP/Logo
+- [ ] **Full mobile responsive support** — Technician should be able to view the work order from tablet/phone
+- [ ] **Multi-tenant architecture preparation** — Isolate each customer's (factory) data; add `tenantId` to all entities
 
 ---
 
 ## [ ] v6.0.0 — Observability & Artificial Intelligence
 
-**Hedef:** Sistemi kurumsal bir dev haline getirmek.
+**Goal:** Turn the system into an enterprise giant.
 
-- [ ] **Metrik İzleme:** Spring Boot Actuator ve Prometheus entegrasyonu.
-- [ ] **Grafana:** RAM, CPU, Kafka Lag (Veri birikmesi) metriklerinin görsel Grafana panellerine dökülmesi.
-- [ ] **AI Entegrasyonu:** Spring AI (OpenAI API) eklenerek "Akıllı Teşhis" modülü oluşturulması (Örn: AI'ın geçmiş bakım loglarını okuyup *"Turbine-01 motorunda yatak arızası ihtimali var"* tahmini yapması).
+- [ ] **Metric Monitoring:** Spring Boot Actuator and Prometheus integration.
+- [ ] **Grafana:** Dumping RAM, CPU, Kafka Lag metrics onto visual Grafana panels.
+- [ ] **AI Integration:** Adding Spring AI (OpenAI API) to create a "Smart Diagnosis" module (E.g., AI reading past maintenance logs and predicting *"Possible bearing failure in Turbine-01 motor"*).
 
-### Zorunlu Görevler
+### Mandatory Tasks
 
-- [ ] Spring Boot Actuator endpoint'lerini etkinleştir
-- [ ] Micrometer + Prometheus bağlantısı kur
-- [ ] `prometheus.yml` yapılandır, Spring Boot'u scrape hedefi olarak ekle
-- [ ] Grafana kur (Docker Compose'a ekle)
-- [ ] Grafana dashboard'larını oluştur:
-  - [ ] JVM RAM / CPU kullanımı
+- [ ] Enable Spring Boot Actuator endpoints
+- [ ] Establish Micrometer + Prometheus connection
+- [ ] Configure `prometheus.yml`, add Spring Boot as scrape target
+- [ ] Install Grafana (Add to Docker Compose)
+- [ ] Create Grafana dashboards:
+  - [ ] JVM RAM / CPU usage
   - [ ] Kafka consumer lag
-  - [ ] HTTP istek gecikmesi (p95, p99)
-  - [ ] Aktif alarm sayısı zaman serisi
-- [ ] Spring AI bağımlılığını ekle (OpenAI API)
-- [ ] `DiagnosisService` — Belirli ekipmanın bakım loglarını okuyup AI'a analiz ettir
-- [ ] `GET /ai/diagnosis/{equipmentId}` endpoint'i — AI tahmini döndür
-- [ ] AI prompt'unu yapılandır: geçmiş arızalar, ortalama aralıklar, sensör trendi dahil edilsin
+  - [ ] HTTP request latency (p95, p99)
+  - [ ] Active alerts count time series
+- [ ] Add Spring AI dependency (OpenAI API)
+- [ ] `DiagnosisService` — Read maintenance logs of specific equipment and have AI analyze them
+- [ ] `GET /ai/diagnosis/{equipmentId}` endpoint — Return AI prediction
+- [ ] Configure AI prompt: include past faults, average intervals, sensor trends
 
-### Önerilen Eklemeler
+### Recommended Additions
 
-- [ ] **Anomali tespiti (ML tabanlı)** — OpenAI yerine ya da ek olarak yerel bir isolation forest modeli; internet bağlantısı gerektirmeyen tesisler için kritik
-- [ ] **Enerji tüketim tahmini** — Sensör verilerinden ekipmanın anormal enerji çektiğini tespit et; fabrikaya enerji tasarrufu sat
-- [ ] **Doğal dil sorgulama** — "Geçen ay en çok arıza hangi makinede oldu?" sorusunu doğal dille sor, AI SQL üretsin
-- [ ] **Alert summary AI** — Her sabah 08:00'de otomatik e-posta: "Dün gece 3 CRITICAL alarm vardı, tahminimiz şu"
-- [ ] **Kamera entegrasyonu (görsel arıza tespiti)** — IP kamera görüntüsü + Vision API; duman, sızıntı, aşırı ısı tespiti
-- [ ] **SLA raporlama modülü** — Müşteriye verilen uptime / response time garantisinin otomatik raporlanması
-- [ ] **Managed Grafana abonelik paketi** — Her müşteriye özel Grafana workspace; ek gelir kapısı
-- [ ] **Kubernetes Helm chart'ı** — Ürünü cloud-native olarak paketle; Azure / AWS Marketplace'e çıkış hazırlığı
+- [ ] **Anomaly detection (ML-based)** — A local isolation forest model instead of or in addition to OpenAI; critical for facilities without internet connection
+- [ ] **Energy consumption prediction** — Detect abnormal energy draw by equipment from sensor data; sell energy savings to the factory
+- [ ] **Natural language query** — Ask "Which machine had the most faults last month?" in natural language, AI generates SQL
+- [ ] **Alert summary AI** — Automated email at 08:00 every morning: "There were 3 CRITICAL alerts last night, here is our prediction"
+- [ ] **Camera integration (visual fault detection)** — IP camera feed + Vision API; smoke, leak, excessive heat detection
+- [ ] **SLA reporting module** — Automated reporting of the uptime / response time guarantee given to the customer
+- [ ] **Managed Grafana subscription package** — Dedicated Grafana workspace for each customer; additional revenue stream
+- [ ] **Kubernetes Helm chart** — Package the product as cloud-native; preparation for Azure / AWS Marketplace launch
 
 ---
 
-## Genel Mimari Öneriler (Tüm Versiyonlar)
+## General Architectural Recommendations (All Versions)
 
-- [ ] **API versiyonlama** — `/api/v1/...` pattern'ini şimdiden uygula; ilerideki breaking change'leri yönet
-- [ ] **Rate limiting** — Spring Cloud Gateway veya Bucket4j ile API kota koruması
-- [ ] **Audit log** — Kim ne zaman ne yaptı? Ayrı bir `AuditLog` tablosu; compliance için zorunlu
-- [ ] **Swagger / OpenAPI** — Her endpoint otomatik dokümante edilsin; müşteri entegrasyon ekibi için
-- [ ] **GitHub Actions CI/CD** — Her PR'da test + build + Docker image push otomatik çalışsın
-- [ ] **Secrets yönetimi** — `.env` dosyası yerine HashiCorp Vault veya AWS Secrets Manager
-- [ ] **GDPR / KVKK uyumu** — Kullanıcı ve teknisyen verisini saklamak için yasal uyumluluk katmanı
+- [ ] **API versioning** — Apply `/api/v1/...` pattern early; manage future breaking changes
+- [ ] **Rate limiting** — API quota protection with Spring Cloud Gateway or Bucket4j
+- [ ] **Audit log** — Who did what and when? A separate `AuditLog` table; mandatory for compliance
+- [ ] **Swagger / OpenAPI** — Auto-document each endpoint; for customer integration teams
+- [ ] **GitHub Actions CI/CD** — Auto-run test + build + Docker image push on every PR
+- [ ] **Secrets management** — HashiCorp Vault or AWS Secrets Manager instead of `.env` file
+- [ ] **GDPR / KVKK compliance** — Legal compliance layer to store user and technician data

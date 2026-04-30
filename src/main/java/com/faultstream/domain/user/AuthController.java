@@ -18,7 +18,7 @@ public class AuthController {
     }
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthResponse>> login(@RequestBody LoginRequest request) {
-        AuthResponse response = authService.authenticate(request.getEmail(), request.getPassword());
+        AuthResponse response = authService.authenticate(request.email(), request.password());
         return ResponseEntity.ok(ApiResponse.success(response, "Giriş başarılı, İyi Çalışmalar Dilerim"));
     }
 }
