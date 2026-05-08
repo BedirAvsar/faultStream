@@ -1,4 +1,6 @@
 package com.faultstream.domain.equipment;
+import com.faultstream.common.exception.ResourceNotFoundException;
+import com.faultstream.domain.dashboard.DashboardCacheService;
 import com.faultstream.domain.equipment.dto.CreateEquipmentRequest;
 import com.faultstream.domain.equipment.dto.EquipmentResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,8 @@ import java.util.stream.Collectors;
 @SuppressWarnings("null")
 public class EquipmentService {
     private final EquipmentRepository equipmentRepository;
+    private final DashboardCacheService dashboardCacheService;
+
     @Transactional
     public EquipmentResponse createEquipment(CreateEquipmentRequest request) {
         Equipment equipment = Equipment.builder()
@@ -25,8 +29,10 @@ public class EquipmentService {
                 .serialNumber(request.serialNumber())
                 .build();
         Equipment savedEquipment = equipmentRepository.save(equipment);
+        dashboardCacheService.evictTerminalSnapshot();
         return mapToResponse(savedEquipment);
     }
+
     @Transactional(readOnly = true)
     public List<EquipmentResponse> getAllEquipments() {
         return equipmentRepository.findAll()
@@ -34,19 +40,21 @@ public class EquipmentService {
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
+
     @Transactional(readOnly = true)
     public EquipmentResponse getEquipmentById(UUID id) {
         return equipmentRepository.findById(id)
                 .map(this::mapToResponse)
-                .orElseThrow(() -> new RuntimeException("Ekipman bulunamadı!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ekipman bulunamadi"));
     }
-    
+
     @Transactional
     public void deleteEquipment(UUID id) {
         if (!equipmentRepository.existsById(id)) {
-            throw new RuntimeException("Silinecek ekipman bulunamadı!");
+            throw new ResourceNotFoundException("Silinecek ekipman bulunamadi");
         }
         equipmentRepository.deleteById(id);
+        dashboardCacheService.evictTerminalSnapshot();
     }
 
     private EquipmentResponse mapToResponse(Equipment equipment) {

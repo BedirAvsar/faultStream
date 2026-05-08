@@ -19,6 +19,8 @@ target/
 *.iml
 *.ipr
 
+/docs/
+/tools/
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -31,3 +33,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Local env files ###
+.env
+.env.local
+.env.*.local
+faultstream-dashboard/.env.local

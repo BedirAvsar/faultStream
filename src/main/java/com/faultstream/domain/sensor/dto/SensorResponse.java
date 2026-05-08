@@ -1,16 +1,18 @@
 package com.faultstream.domain.sensor.dto;
-
 import com.faultstream.domain.sensor.SensorType;
-
+import lombok.Builder;
+import lombok.Data;
 import java.util.UUID;
-
-public record SensorResponse(
-        UUID id,
-        UUID equipmentId,
-        String name,
-        SensorType type,
-        String unit,
-        Double thresholdMin,
-        Double thresholdMax,
-        boolean isActive
-) {}
+@Data
+@Builder
+public class SensorResponse {
+    private UUID id;
+    private UUID equipmentId;
+    private String equipmentName;
+    private String name;
+    private SensorType type;
+    private String unit;
+    private Double thresholdMin;
+    private Double thresholdMax;
+    private boolean active;
+}

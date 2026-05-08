@@ -1,0 +1,7 @@
+jwt:
+    secret: local-dev-only-jwt-secret-12345678901234567890
+simulator:
+    enabled: true
+faultstream:
+    demo:
+        seed-data-enabled: true

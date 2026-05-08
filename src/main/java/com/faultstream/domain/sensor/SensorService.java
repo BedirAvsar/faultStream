@@ -1,81 +1,121 @@
 package com.faultstream.domain.sensor;
-
-import com.faultstream.domain.alert.Alert;
-import com.faultstream.domain.sensor.dto.SensorDataEvent;
+import com.faultstream.common.exception.ResourceNotFoundException;
+import com.faultstream.domain.dashboard.DashboardCacheService;
+import com.faultstream.domain.equipment.Equipment;
+import com.faultstream.domain.equipment.EquipmentRepository;
+import com.faultstream.domain.sensor.dto.CreateSensorRequest;
+import com.faultstream.domain.sensor.dto.SensorReadingResponse;
+import com.faultstream.domain.sensor.dto.SensorResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.List;
+import java.util.UUID;
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class SensorService {
-
     private final SensorRepository sensorRepository;
     private final SensorReadingRepository sensorReadingRepository;
-    private final com.faultstream.domain.alert.AlertService alertService;
-    private final com.faultstream.domain.workorder.WorkOrderService workOrderService;
+    private final EquipmentRepository equipmentRepository;
+    private final DashboardCacheService dashboardCacheService;
 
     @Transactional
-    public void processSensorData(SensorDataEvent event) {
-        Sensor sensor = sensorRepository.findById(event.sensorId())
-                .orElseThrow(() -> new RuntimeException("Sensör bulunamadı: " + event.sensorId()));
+    public SensorResponse createSensor(CreateSensorRequest request) {
+        Equipment equipment = equipmentRepository.findById(request.getEquipmentId())
+                .orElseThrow(() -> new ResourceNotFoundException("Sensor eklenecek ekipman bulunamadi"));
 
-        SensorReading reading = SensorReading.builder()
-                .sensor(sensor)
-                .value(event.value())
-                .recordedAt(event.recordedAt())
+        Sensor sensor = Sensor.builder()
+                .equipment(equipment)
+                .name(request.getName())
+                .type(request.getType())
+                .unit(request.getUnit())
+                .thresholdMin(request.getThresholdMin())
+                .thresholdMax(request.getThresholdMax())
                 .build();
 
-        sensorReadingRepository.save(reading);
+        Sensor savedSensor = sensorRepository.save(sensor);
+        dashboardCacheService.evictTerminalSnapshot();
+        return mapSensor(savedSensor);
+    }
 
-        // Check thresholds for alerting
-        if (sensor.getThresholdMax() != null && event.value() > sensor.getThresholdMax()) {
-            log.warn("CRITICAL: Sensor {} value {} exceeded max threshold {}", sensor.getId(), event.value(), sensor.getThresholdMax());
-            Alert alert = alertService.createAlert(
-                sensor, 
-                sensor.getEquipment(), 
-                com.faultstream.domain.alert.AlertLevel.CRITICAL, 
-                String.format("Value %.2f exceeded MAX threshold %.2f", event.value(), sensor.getThresholdMax())
-            );
-            workOrderService.createWorkOrder(alert);
-        } else if (sensor.getThresholdMin() != null && event.value() < sensor.getThresholdMin()) {
-            log.warn("WARNING: Sensor {} value {} dropped below min threshold {}", sensor.getId(), event.value(), sensor.getThresholdMin());
-            alertService.createAlert(
-                sensor, 
-                sensor.getEquipment(), 
-                com.faultstream.domain.alert.AlertLevel.WARNING, 
-                String.format("Value %.2f dropped below MIN threshold %.2f", event.value(), sensor.getThresholdMin())
-            );
+    @Transactional(readOnly = true)
+    public List<SensorResponse> getAllSensors() {
+        return sensorRepository.findByIsActiveTrueOrderByNameAsc()
+                .stream()
+                .map(this::mapSensor)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public SensorResponse getSensorById(UUID id) {
+        return sensorRepository.findById(id)
+                .map(this::mapSensor)
+                .orElseThrow(() -> new ResourceNotFoundException("Sensor bulunamadi"));
+    }
+
+    @Transactional(readOnly = true)
+    public List<SensorReadingResponse> getSensorReadings(UUID sensorId, int last) {
+        Sensor sensor = sensorRepository.findById(sensorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Sensor bulunamadi"));
+
+        int limit = Math.max(1, Math.min(last, 250));
+        return sensorReadingRepository.findBySensorIdOrderByRecordedAtDesc(sensorId, PageRequest.of(0, limit))
+                .stream()
+                .map(reading -> mapReading(reading, sensor))
+                .toList();
+    }
+
+    private SensorResponse mapSensor(Sensor sensor) {
+        return SensorResponse.builder()
+                .id(sensor.getId())
+                .equipmentId(sensor.getEquipment().getId())
+                .equipmentName(sensor.getEquipment().getName())
+                .name(sensor.getName())
+                .type(sensor.getType())
+                .unit(sensor.getUnit())
+                .thresholdMin(sensor.getThresholdMin())
+                .thresholdMax(sensor.getThresholdMax())
+                .active(sensor.isActive())
+                .build();
+    }
+
+    private SensorReadingResponse mapReading(SensorReading reading, Sensor fallbackSensor) {
+        Sensor sensor = reading.getSensor() != null ? reading.getSensor() : fallbackSensor;
+        return SensorReadingResponse.builder()
+                .id(reading.getId())
+                .equipmentName(sensor.getEquipment().getName())
+                .sensorName(sensor.getName())
+                .sensorType(sensor.getType().name())
+                .value(reading.getValue())
+                .unit(sensor.getUnit())
+                .status(resolveStatus(sensor, reading.getValue()))
+                .recordedAt(reading.getRecordedAt())
+                .build();
+    }
+
+    public static String resolveStatus(Sensor sensor, double value) {
+        boolean belowMin = sensor.getThresholdMin() != null && value < sensor.getThresholdMin();
+        boolean aboveMax = sensor.getThresholdMax() != null && value > sensor.getThresholdMax();
+        if (belowMin || aboveMax) {
+            double deviation = calculateDeviation(sensor, value);
+            return deviation >= 0.18 ? "CRITICAL" : "WARNING";
         }
+        return "NORMAL";
     }
 
-    @Transactional(readOnly = true)
-    public java.util.List<com.faultstream.domain.sensor.dto.SensorResponse> getAllSensors() {
-        return sensorRepository.findAll().stream()
-                .map(this::mapToResponse)
-                .toList();
+    public static double calculateDeviation(Sensor sensor, double value) {
+        if (sensor.getThresholdMin() != null && value < sensor.getThresholdMin()) {
+            return safeDeviation(sensor.getThresholdMin(), value);
+        }
+        if (sensor.getThresholdMax() != null && value > sensor.getThresholdMax()) {
+            return safeDeviation(sensor.getThresholdMax(), value);
+        }
+        return 0.0;
     }
 
-    @Transactional(readOnly = true)
-    public java.util.List<com.faultstream.domain.sensor.dto.SensorReadingResponse> getSensorReadings(java.util.UUID sensorId, int lastN) {
-        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(0, lastN);
-        return sensorReadingRepository.findBySensorIdOrderByRecordedAtDesc(sensorId, pageable).stream()
-                .map(r -> new com.faultstream.domain.sensor.dto.SensorReadingResponse(r.getId(), r.getValue(), r.getRecordedAt()))
-                .toList();
-    }
-
-    private com.faultstream.domain.sensor.dto.SensorResponse mapToResponse(Sensor sensor) {
-        return new com.faultstream.domain.sensor.dto.SensorResponse(
-                sensor.getId(),
-                sensor.getEquipment() != null ? sensor.getEquipment().getId() : null,
-                sensor.getName(),
-                sensor.getType(),
-                sensor.getUnit(),
-                sensor.getThresholdMin(),
-                sensor.getThresholdMax(),
-                sensor.isActive()
-        );
+    private static double safeDeviation(double threshold, double value) {
+        double base = Math.max(Math.abs(threshold), 1.0);
+        return Math.abs(value - threshold) / base;
     }
 }

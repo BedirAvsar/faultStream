@@ -1,85 +1,106 @@
 package com.faultstream.domain.workorder;
-
+import com.faultstream.common.exception.ResourceNotFoundException;
 import com.faultstream.domain.alert.Alert;
+import com.faultstream.domain.alert.AlertSeverity;
 import com.faultstream.domain.user.User;
 import com.faultstream.domain.user.UserRepository;
 import com.faultstream.domain.user.UserRole;
+import com.faultstream.domain.workorder.dto.WorkOrderResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class WorkOrderService {
-
     private final WorkOrderRepository workOrderRepository;
     private final UserRepository userRepository;
 
-    @Transactional
-    public WorkOrder createWorkOrder(Alert alert) {
-        // Try to find a technician
-        List<User> technicians = userRepository.findByRole(UserRole.TECHNICIAN);
-        User assignedTechnician = technicians.isEmpty() ? null : technicians.get(0);
-
-        WorkOrder workOrder = WorkOrder.builder()
-                .alert(alert)
-                .assignedTechnician(assignedTechnician)
-                .status(WorkOrderStatus.OPEN)
-                .notes("Auto-generated work order from CRITICAL alert on Sensor: " + alert.getSensor().getName())
-                .build();
-
-        workOrder = workOrderRepository.save(workOrder);
-        
-        if (assignedTechnician != null) {
-            log.info("Work Order {} auto-assigned to Technician {}", workOrder.getId(), assignedTechnician.getEmail());
-        } else {
-            log.warn("Work Order {} created but NO TECHNICIAN is available to assign!", workOrder.getId());
-        }
-
-        return workOrder;
-    }
-
-    @Transactional
-    public WorkOrderResponse completeWorkOrder(UUID workOrderId, String notes) {
-        WorkOrder workOrder = workOrderRepository.findById(workOrderId)
-                .orElseThrow(() -> new IllegalArgumentException("WorkOrder not found with id: " + workOrderId));
-        
-        workOrder.setStatus(WorkOrderStatus.COMPLETED);
-        workOrder.setCompletedAt(LocalDateTime.now());
-        if (notes != null && !notes.isEmpty()) {
-            workOrder.setNotes(workOrder.getNotes() + "\nResolution Notes: " + notes);
-        }
-        
-        workOrder = workOrderRepository.save(workOrder);
-        log.info("Work Order {} completed.", workOrderId);
-        
-        return mapToResponse(workOrder);
+    @Transactional(readOnly = true)
+    public List<WorkOrderResponse> getAllWorkOrders() {
+        return workOrderRepository.findAllByOrderByCreatedAtDesc().stream().map(this::mapToResponse).toList();
     }
 
     @Transactional(readOnly = true)
-    public List<WorkOrderResponse> getOpenWorkOrders() {
-        return workOrderRepository.findByStatus(WorkOrderStatus.OPEN)
-                .stream()
+    public WorkOrderResponse getWorkOrderById(UUID id) {
+        return workOrderRepository.findById(id)
                 .map(this::mapToResponse)
-                .collect(Collectors.toList());
+                .orElseThrow(() -> new ResourceNotFoundException("Work order bulunamadi"));
     }
 
-    private WorkOrderResponse mapToResponse(WorkOrder workOrder) {
+    @Transactional
+    public WorkOrder createAutomatedWorkOrder(Alert alert) {
+        Optional<WorkOrder> existing = workOrderRepository.findByAlert_IdAndStatusNot(alert.getId(), WorkOrderStatus.CLOSED);
+        if (existing.isPresent()) {
+            return existing.get();
+        }
+
+        User assignedTechnician = userRepository.findFirstByRoleAndIsActiveTrueOrderByCreatedAtAsc(UserRole.TECHNICIAN).orElse(null);
+        User creator = userRepository.findFirstByRoleAndIsActiveTrueOrderByCreatedAtAsc(UserRole.ENGINEER)
+                .or(() -> userRepository.findFirstByRoleAndIsActiveTrueOrderByCreatedAtAsc(UserRole.ADMIN))
+                .orElse(null);
+
+        WorkOrder workOrder = WorkOrder.builder()
+                .equipment(alert.getEquipment())
+                .alert(alert)
+                .title("Investigate " + alert.getEquipment().getName() + " / " + alert.getSensor().getName())
+                .description(alert.getMessage())
+                .type(WorkOrderType.CORRECTIVE)
+                .priority(alert.getSeverity() == null ? WorkOrderPriority.HIGH : WorkOrderPriority.valueOf(alert.getSeverity().name()))
+                .status(assignedTechnician != null ? WorkOrderStatus.IN_PROGRESS : WorkOrderStatus.OPEN)
+                .assignedTo(assignedTechnician)
+                .createdBy(creator)
+                .dueDate(LocalDateTime.now().plusHours(alert.getSeverity() == AlertSeverity.CRITICAL ? 4 : 12))
+                .build();
+        return workOrderRepository.save(workOrder);
+    }
+
+    @Transactional
+    public WorkOrderResponse assignWorkOrder(UUID workOrderId, UUID technicianId) {
+        WorkOrder workOrder = workOrderRepository.findById(workOrderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Work order bulunamadi"));
+        User technician = userRepository.findById(technicianId)
+                .orElseThrow(() -> new ResourceNotFoundException("Technician bulunamadi"));
+        if (technician.getRole() != UserRole.TECHNICIAN) {
+            throw new IllegalArgumentException("Atanan kullanici technician rolunde olmali");
+        }
+        workOrder.setAssignedTo(technician);
+        if (workOrder.getStatus() == WorkOrderStatus.OPEN) {
+            workOrder.setStatus(WorkOrderStatus.IN_PROGRESS);
+        }
+        return mapToResponse(workOrderRepository.save(workOrder));
+    }
+
+    @Transactional
+    public WorkOrderResponse completeWorkOrder(UUID workOrderId) {
+        WorkOrder workOrder = workOrderRepository.findById(workOrderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Work order bulunamadi"));
+        workOrder.setStatus(WorkOrderStatus.CLOSED);
+        workOrder.setClosedAt(LocalDateTime.now());
+        return mapToResponse(workOrderRepository.save(workOrder));
+    }
+
+    public WorkOrderResponse mapToResponse(WorkOrder workOrder) {
         return WorkOrderResponse.builder()
                 .id(workOrder.getId())
-                .alertId(workOrder.getAlert().getId())
-                .assignedTechnicianId(workOrder.getAssignedTechnician() != null ? workOrder.getAssignedTechnician().getId() : null)
-                .status(workOrder.getStatus().name())
-                .notes(workOrder.getNotes())
+                .equipmentId(workOrder.getEquipment() != null ? workOrder.getEquipment().getId() : null)
+                .equipmentName(workOrder.getEquipment() != null ? workOrder.getEquipment().getName() : null)
+                .alertId(workOrder.getAlert() != null ? workOrder.getAlert().getId() : null)
+                .title(workOrder.getTitle())
+                .description(workOrder.getDescription())
+                .type(workOrder.getType())
+                .priority(workOrder.getPriority())
+                .status(workOrder.getStatus())
+                .assignedToId(workOrder.getAssignedTo() != null ? workOrder.getAssignedTo().getId() : null)
+                .assignedToName(workOrder.getAssignedTo() != null ? workOrder.getAssignedTo().getFullName() : null)
+                .createdById(workOrder.getCreatedBy() != null ? workOrder.getCreatedBy().getId() : null)
+                .createdByName(workOrder.getCreatedBy() != null ? workOrder.getCreatedBy().getFullName() : null)
+                .dueDate(workOrder.getDueDate())
+                .closedAt(workOrder.getClosedAt())
                 .createdAt(workOrder.getCreatedAt())
-                .completedAt(workOrder.getCompletedAt())
                 .build();
     }
 }
